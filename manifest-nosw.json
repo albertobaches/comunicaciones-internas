@@ -1,0 +1,38 @@
+{
+  "name": "Comunicaciones Internas",
+  "short_name": "Comunicaciones",
+  "start_url": "https://192.168.1.123:8443/inicio-simple.html?source=pwa",
+  "id": "https://192.168.1.123:8443/nosw",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#2196F3",
+  "scope": "https://192.168.1.123:8443/",
+  "lang": "es",
+  "categories": ["business", "productivity"],
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://192.168.1.123:8443/img/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Login Directo",
+      "short_name": "Login",
+      "description": "Ir directamente al login",
+      "url": "https://192.168.1.123:8443/login.html?source=shortcut",
+      "icons": [
+        {
+          "src": "https://192.168.1.123:8443/img/app-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "description": "Sistema de comunicaciones internas optimizado para móviles sin Service Worker"
+}

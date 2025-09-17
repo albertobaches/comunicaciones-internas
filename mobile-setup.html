@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Móvil - Comunicaciones Internas</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .step {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+        .step h3 {
+            margin: 0 0 10px 0;
+            color: #4CAF50;
+        }
+        .code {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            width: 100%;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .warning {
+            background: rgba(255,193,7,0.2);
+            border-left: 4px solid #FFC107;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Setup para Móvil</h1>
+        
+        <div class="step">
+            <h3>1. Abrir Trae AI en iPhone</h3>
+            <p>Ve a Safari y abre:</p>
+            <div class="code">https://trae.ai</div>
+            <p>Inicia sesión con tu cuenta</p>
+        </div>
+
+        <div class="step">
+            <h3>2. Crear nuevo proyecto</h3>
+            <p>Crea un proyecto llamado:</p>
+            <div class="code">comunicaciones-internas-mobile</div>
+        </div>
+
+        <div class="step">
+            <h3>3. Subir archivos esenciales</h3>
+            <p>Sube estos archivos desde tu Mac:</p>
+            <div class="code">
+                • app-final.html<br>
+                • manifest-final.json<br>
+                • img/app-icon.svg<br>
+                • https-server.py
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>4. Ejecutar servidor</h3>
+            <p>En la terminal de Trae AI móvil:</p>
+            <div class="code">python3 https-server.py</div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Importante:</strong> Una vez en el móvil, yo podré trabajar directamente en Safari y hacer todas las pruebas necesarias hasta que funcione perfectamente.
+        </div>
+
+        <button class="button" onclick="copyFiles()">📋 Copiar lista de archivos</button>
+        
+        <div class="step">
+            <h3>5. URL de acceso móvil</h3>
+            <p>Una vez ejecutado el servidor:</p>
+            <div class="code">https://localhost:8443/app-final.html</div>
+        </div>
+    </div>
+
+    <script>
+        function copyFiles() {
+            const files = `app-final.html
+manifest-final.json
+img/app-icon.svg
+https-server.py`;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(files);
+                alert('Lista de archivos copiada al portapapeles');
+            } else {
+                alert('Archivos necesarios:\n' + files);
+            }
+        }
+    </script>
+</body>
+</html>

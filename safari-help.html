@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍎 Guía para Safari - Comunicaciones Internas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .step-number {
+            background: #4CAF50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .step-content {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 45px);
+        }
+        
+        .step h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border: 2px solid #FFC107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .warning-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .button {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .screenshot {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            font-style: italic;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍎 Guía para Safari</h1>
+            <p>Sigue estos pasos para acceder de forma segura</p>
+        </div>
+        
+        <div class="warning">
+            <div class="warning-icon">⚠️</div>
+            <strong>¿Ves "El sitio no es seguro"?</strong><br>
+            ¡No te preocupes! Es normal. Sigue estos pasos:
+        </div>
+        
+        <div class="step">
+            <span class="step-number">1</span>
+            <div class="step-content">
+                <h3>Busca "Mostrar detalles"</h3>
+                <p>En la pantalla de advertencia, busca y toca <strong>"Mostrar detalles"</strong> o <strong>"Avanzado"</strong></p>
+                <div class="screenshot">📱 Pantalla: "Esta conexión no es privada"</div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">2</span>
+            <div class="step-content">
+                <h3>Busca "Visitar este sitio web"</h3>
+                <p>Después de tocar "Mostrar detalles", aparecerá una opción que dice <strong>"Visitar este sitio web"</strong> o <strong>"Continuar a 192.168.1.123 (no seguro)"</strong></p>
+                <div class="screenshot">🔍 Busca el enlace azul pequeño</div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">3</span>
+            <div class="step-content">
+                <h3>Confirma tu decisión</h3>
+                <p>Safari te pedirá confirmar. Toca <strong>"Visitar sitio web"</strong> para continuar</p>
+                <div class="screenshot">✅ Confirma que quieres continuar</div>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <div class="warning-icon">💡</div>
+            <strong>¿No ves estas opciones?</strong><br>
+            Intenta actualizar la página o usar el botón de abajo
+        </div>
+        
+        <div class="button-container">
+            <a href="https://192.168.1.123:8443/inicio.html" class="button">
+                🔒 Ir al sitio HTTPS
+            </a>
+            <br>
+            <a href="http://192.168.1.123:8001/acceso-publico.html" class="button" style="background: #2196F3;">
+                📋 Volver a instrucciones
+            </a>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center; opacity: 0.8;">
+            <p><small>🔐 Este certificado es autofirmado pero la conexión es segura</small></p>
+        </div>
+    </div>
+</body>
+</html>

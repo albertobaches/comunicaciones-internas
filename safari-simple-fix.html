@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Comunicaciones Internas</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Comunicaciones">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" href="img/app-icon.svg">
+    <link rel="icon" type="image/svg+xml" href="img/app-icon.svg">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest-simple.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0, 255, 0, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Comunicaciones Internas</h1>
+        <p>Sistema funcionando correctamente</p>
+        
+        <a href="index.html" class="btn">📧 Acceder al Sistema</a>
+        <a href="login.html" class="btn">🔐 Iniciar Sesión</a>
+        
+        <div class="status">
+            <strong>Estado:</strong> Servidor activo<br>
+            <strong>IP:</strong> 192.168.1.123:8443<br>
+            <strong>Versión:</strong> Simplificada
+        </div>
+    </div>
+
+    <script>
+        // Script ultra-simple sin Service Worker
+        console.log('✅ Página cargada correctamente');
+        
+        // Prevenir zoom en Safari
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        });
+        
+        // Mostrar confirmación de carga
+        setTimeout(function() {
+            console.log('✅ JavaScript funcionando');
+        }, 100);
+    </script>
+</body>
+</html>

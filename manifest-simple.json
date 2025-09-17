@@ -1,0 +1,36 @@
+{
+  "name": "Comunicaciones Internas - Simple",
+  "short_name": "Comunicaciones",
+  "start_url": "/safari-simple-fix.html?pwa=true",
+  "id": "/simple",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#2196F3",
+  "scope": "/",
+  "lang": "es",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "/img/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Acceso Directo",
+      "short_name": "Login",
+      "description": "Ir directamente al login",
+      "url": "/login.html",
+      "icons": [
+        {
+          "src": "/img/app-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

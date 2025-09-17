@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirigiendo a HTTPS...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            max-width: 500px;
+        }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .manual-link {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Redirigiendo a HTTPS</h1>
+        <div class="spinner"></div>
+        <p>Detectamos que Safari tiene "Solo HTTPS" activado.</p>
+        <p>Te estamos redirigiendo automáticamente a la versión segura...</p>
+        
+        <div id="manual-redirect" style="display: none;">
+            <p><strong>Si no se redirige automáticamente:</strong></p>
+            <a href="https://192.168.1.123:8443/inicio.html" class="manual-link">
+                🚀 Ir a la App (HTTPS)
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Función de redirección automática
+        function redirectToHTTPS() {
+            const httpsUrl = 'https://192.168.1.123:8443/inicio.html';
+            console.log('Redirigiendo a:', httpsUrl);
+            
+            // Intentar redirección automática
+            try {
+                window.location.replace(httpsUrl);
+            } catch (error) {
+                console.log('Error en redirección automática:', error);
+                showManualRedirect();
+            }
+        }
+
+        // Mostrar enlace manual si falla la redirección automática
+        function showManualRedirect() {
+            document.getElementById('manual-redirect').style.display = 'block';
+        }
+
+        // Ejecutar redirección después de 2 segundos
+        setTimeout(redirectToHTTPS, 2000);
+        
+        // Mostrar enlace manual después de 5 segundos como respaldo
+        setTimeout(showManualRedirect, 5000);
+    </script>
+</body>
+</html>

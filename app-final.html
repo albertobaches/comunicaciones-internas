@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Comunicaciones Internas</title>
+    
+    <!-- PWA Meta Tags BÁSICOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Comunicaciones">
+    <meta name="theme-color" content="#4285f4">
+    
+    <!-- Icono simple -->
+    <link rel="apple-touch-icon" href="img/app-icon.svg">
+    <link rel="icon" href="img/app-icon.svg">
+    
+    <!-- Manifest simple -->
+    <link rel="manifest" href="manifest-final.json">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(52, 168, 83, 0.3);
+            border-radius: 10px;
+            font-size: 14px;
+            border: 1px solid rgba(52, 168, 83, 0.5);
+        }
+        
+        .install-tip {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 193, 7, 0.3);
+            border-radius: 10px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 193, 7, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📧</div>
+        <h1>Comunicaciones Internas</h1>
+        <p class="subtitle">Sistema empresarial</p>
+        
+        <a href="index.html" class="btn">📧 Acceder al Sistema</a>
+        <a href="login.html" class="btn">🔐 Iniciar Sesión</a>
+        
+        <div class="status">
+            ✅ <strong>Estado:</strong> Aplicación lista<br>
+            🌐 <strong>Servidor:</strong> Activo<br>
+            📱 <strong>Dispositivo:</strong> <span id="device">Detectando...</span>
+        </div>
+        
+        <div class="install-tip">
+            💡 <strong>Para instalar:</strong> Toca "Compartir" → "Añadir a pantalla de inicio"
+        </div>
+    </div>
+
+    <script>
+        // Detectar dispositivo
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isSafari = /Safari/i.test(navigator.userAgent) && !/Chrome/i.test(navigator.userAgent);
+        
+        document.getElementById('device').textContent = 
+            isMobile ? (isSafari ? 'Safari iOS' : 'Móvil') : 'Escritorio';
+        
+        // Log simple
+        console.log('App cargada correctamente');
+        console.log('Dispositivo:', isMobile ? 'Móvil' : 'Escritorio');
+        console.log('Safari:', isSafari);
+        
+        // Detectar si es PWA
+        if (window.navigator.standalone) {
+            console.log('Ejecutándose como PWA');
+            document.querySelector('.install-tip').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

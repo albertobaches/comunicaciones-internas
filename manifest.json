@@ -1,0 +1,38 @@
+{
+  "name": "Comunicaciones Internas",
+  "short_name": "ComInternas",
+  "description": "Sistema de gestión de comunicados empresariales",
+  "start_url": "/safari-inicio.html",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "id": "/comunicaciones-internas/",
+  "lang": "es",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "img/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "img/app-icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/app-icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}

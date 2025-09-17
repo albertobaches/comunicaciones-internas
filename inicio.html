@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunicaciones Internas - Bienvenido</title>
+    
+    <!-- Redirección automática a HTTPS para Safari (solo en navegador) -->
+    <script>
+        // Solo redirigir si NO estamos en modo PWA
+        if (location.protocol !== 'https:' && 
+            location.hostname !== 'localhost' && 
+            !window.matchMedia('(display-mode: standalone)').matches &&
+            !window.navigator.standalone) {
+            // Redirigir a HTTPS en el puerto 8443
+            const httpsUrl = 'https://' + location.hostname + ':8443' + location.pathname + location.search;
+            console.log('Redirigiendo a HTTPS:', httpsUrl);
+            location.replace(httpsUrl);
+        }
+    </script>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ComInternas">
+    <meta name="description" content="Sistema de gestión de comunicados empresariales">
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" href="img/app-icon.svg">
+    <link rel="icon" type="image/svg+xml" href="img/app-icon.svg">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .welcome-container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .welcome-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .welcome-container p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .redirect-info {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>🏢 Comunicaciones Internas</h1>
+        <p>Sistema de gestión de comunicados empresariales</p>
+        <div class="loading"></div>
+        <div class="redirect-info">
+            Redirigiendo al sistema de acceso...
+        </div>
+    </div>
+
+    <script>
+        // Detectar si estamos en modo PWA
+        const isPWA = window.matchMedia('(display-mode: standalone)').matches || 
+                      window.navigator.standalone || 
+                      document.referrer.includes('android-app://');
+        
+        console.log('Modo PWA detectado:', isPWA);
+        
+        // Registrar Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registrado con éxito:', registration);
+                        // Esperar a que el SW esté listo antes de continuar
+                        return navigator.serviceWorker.ready;
+                    })
+                    .then(() => {
+                        console.log('SW listo, continuando...');
+                        redirectToLogin();
+                    })
+                    .catch(registrationError => {
+                        console.log('SW falló al registrarse:', registrationError);
+                        // Continuar sin SW si falla
+                        redirectToLogin();
+                    });
+            });
+        } else {
+            // Si no hay soporte para SW, continuar directamente
+            redirectToLogin();
+        }
+        
+        function redirectToLogin() {
+            // Redirigir automáticamente al login después de 2 segundos
+            setTimeout(() => {
+                try {
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('Error en redirección:', error);
+                    // Fallback: recargar la página
+                    window.location.reload();
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

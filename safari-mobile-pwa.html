@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- Meta tags CRÍTICOS para Safari móvil -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- PWA Meta tags específicos para Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Comunicaciones">
+    <meta name="apple-touch-fullscreen" content="yes">
+    
+    <!-- Prevenir zoom automático en inputs -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    
+    <title>Comunicaciones Internas - Safari Mobile</title>
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest-mobile.json">
+    
+    <!-- Iconos específicos para Safari -->
+    <link rel="apple-touch-icon" href="img/app-icon.svg">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/app-icon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/app-icon.svg">
+    <link rel="apple-touch-icon" sizes="167x167" href="img/app-icon.svg">
+    
+    <!-- Splash screens para Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <style>
+        /* Reset específico para Safari móvil */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255,255,255,0.1);
+            padding: 40px 30px;
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+        
+        .status {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        .device-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 12px;
+            text-align: left;
+        }
+        
+        .install-button {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        .install-button:active {
+            transform: scale(0.98);
+            background: linear-gradient(45deg, #45a049, #4CAF50);
+        }
+        
+        .test-results {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 11px;
+            text-align: left;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .warning { color: #ff9800; }
+        
+        /* Animaciones específicas para Safari */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .container {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* Soporte para notch de iPhone */
+        @supports (padding: max(0px)) {
+            body {
+                padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📱</div>
+        <h1>Comunicaciones Internas</h1>
+        <p class="subtitle">PWA optimizada para Safari móvil</p>
+        
+        <div class="status" id="status">
+            <span class="success">✅ Cargado correctamente en Safari</span>
+        </div>
+        
+        <button class="install-button" id="installBtn" onclick="installPWA()">
+            📲 Instalar en pantalla de inicio
+        </button>
+        
+        <div class="device-info" id="deviceInfo">
+            <strong>Información del dispositivo:</strong><br>
+            <span id="deviceDetails">Cargando...</span>
+        </div>
+        
+        <div class="test-results" id="testResults">
+            <strong>Pruebas en tiempo real:</strong><br>
+            <span id="testLog">Iniciando pruebas...</span>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales para diagnóstico
+        let testLog = [];
+        let deferredPrompt;
+        
+        // Función para agregar logs
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            testLog.push(logEntry);
+            
+            const logElement = document.getElementById('testLog');
+            logElement.innerHTML = testLog.slice(-10).join('<br>');
+            
+            console.log(logEntry);
+        }
+        
+        // Detectar información del dispositivo
+        function detectDevice() {
+            const ua = navigator.userAgent;
+            const isIOS = /iPad|iPhone|iPod/.test(ua);
+            const isSafari = /Safari/.test(ua) && !/Chrome/.test(ua);
+            const isStandalone = window.navigator.standalone;
+            const isInWebAppiOS = window.navigator.standalone;
+            
+            const deviceInfo = {
+                userAgent: ua,
+                isIOS: isIOS,
+                isSafari: isSafari,
+                isStandalone: isStandalone,
+                viewport: `${window.innerWidth}x${window.innerHeight}`,
+                pixelRatio: window.devicePixelRatio,
+                online: navigator.onLine,
+                cookieEnabled: navigator.cookieEnabled,
+                language: navigator.language
+            };
+            
+            document.getElementById('deviceDetails').innerHTML = `
+                iOS: ${isIOS ? '✅' : '❌'}<br>
+                Safari: ${isSafari ? '✅' : '❌'}<br>
+                Standalone: ${isStandalone ? '✅' : '❌'}<br>
+                Viewport: ${deviceInfo.viewport}<br>
+                Pixel Ratio: ${deviceInfo.pixelRatio}<br>
+                Online: ${deviceInfo.online ? '✅' : '❌'}
+            `;
+            
+            addLog(`Dispositivo detectado: ${isIOS ? 'iOS' : 'Otro'} - ${isSafari ? 'Safari' : 'Otro navegador'}`, 'success');
+            
+            return deviceInfo;
+        }
+        
+        // Pruebas de funcionalidad PWA
+        function runPWATests() {
+            addLog('Iniciando pruebas PWA...', 'info');
+            
+            // Test 1: Service Worker
+            if ('serviceWorker' in navigator) {
+                addLog('✅ Service Worker soportado', 'success');
+            } else {
+                addLog('❌ Service Worker NO soportado', 'error');
+            }
+            
+            // Test 2: Manifest
+            if ('manifest' in document.createElement('link')) {
+                addLog('✅ Web App Manifest soportado', 'success');
+            } else {
+                addLog('❌ Web App Manifest NO soportado', 'error');
+            }
+            
+            // Test 3: Add to Home Screen
+            if ('beforeinstallprompt' in window) {
+                addLog('✅ Add to Home Screen soportado', 'success');
+            } else {
+                addLog('ℹ️ Add to Home Screen (método iOS)', 'warning');
+            }
+            
+            // Test 4: Fetch API
+            if ('fetch' in window) {
+                addLog('✅ Fetch API disponible', 'success');
+            } else {
+                addLog('❌ Fetch API NO disponible', 'error');
+            }
+            
+            // Test 5: Local Storage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                addLog('✅ Local Storage funcional', 'success');
+            } catch (e) {
+                addLog('❌ Local Storage NO funcional', 'error');
+            }
+        }
+        
+        // Función de instalación PWA
+        function installPWA() {
+            const deviceInfo = detectDevice();
+            
+            if (deviceInfo.isIOS && deviceInfo.isSafari) {
+                // Instrucciones para iOS Safari
+                alert(`📱 Para instalar en iOS:
+
+1. Toca el botón "Compartir" (⬆️) en la barra inferior
+2. Desplázate y toca "Añadir a pantalla de inicio"
+3. Toca "Añadir" en la esquina superior derecha
+
+¡La app aparecerá en tu pantalla de inicio!`);
+                
+                addLog('Instrucciones de instalación iOS mostradas', 'info');
+            } else if (deferredPrompt) {
+                // Para otros navegadores con soporte nativo
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        addLog('PWA instalada correctamente', 'success');
+                    } else {
+                        addLog('Instalación PWA cancelada', 'warning');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                addLog('Instalación PWA no disponible en este navegador', 'warning');
+            }
+        }
+        
+        // Event listeners
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            addLog('Prompt de instalación disponible', 'success');
+        });
+        
+        window.addEventListener('appinstalled', () => {
+            addLog('PWA instalada exitosamente', 'success');
+            deferredPrompt = null;
+        });
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            addLog('DOM cargado completamente', 'success');
+            detectDevice();
+            runPWATests();
+            
+            // Test de conectividad
+            fetch(window.location.href)
+                .then(() => addLog('✅ Conectividad verificada', 'success'))
+                .catch(() => addLog('❌ Error de conectividad', 'error'));
+        });
+        
+        // Monitoreo de cambios de red
+        window.addEventListener('online', () => addLog('🌐 Conexión restaurada', 'success'));
+        window.addEventListener('offline', () => addLog('📵 Conexión perdida', 'warning'));
+        
+        // Prevenir zoom en inputs (específico para Safari)
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        });
+        
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>

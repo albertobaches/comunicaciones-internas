@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Universal - Comunicaciones Internas</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        .alert {
+            background: rgba(255,193,7,0.9);
+            color: #000;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .step {
+            background: rgba(255,255,255,0.1);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+        .step h3 {
+            margin: 0 0 10px 0;
+            color: #4CAF50;
+        }
+        .url-box {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.1em;
+            text-align: center;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .button {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 10px 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .ios-specific {
+            background: rgba(0,122,255,0.2);
+            border-left-color: #007AFF;
+        }
+        .ios-specific h3 {
+            color: #007AFF;
+        }
+        .android-specific {
+            background: rgba(76,175,80,0.2);
+            border-left-color: #4CAF50;
+        }
+        .credentials {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Acceso Universal</h1>
+        <h2>Comunicaciones Internas</h2>
+        
+        <div class="alert">
+            ⚠️ PROBLEMA DETECTADO: Safari con "Solo HTTPS" activado
+        </div>
+
+        <div class="step ios-specific">
+             <h3>🍎 SOLUCIÓN PARA iPhone/iPad (Safari)</h3>
+             <p><strong>Opción 1 - Redirección Automática (Más Fácil):</strong></p>
+             <div class="url-box">http://192.168.1.123:8001/safari-redirect.html</div>
+             <p>1️⃣ Copia la URL de arriba<br>
+             2️⃣ Pégala en Safari<br>
+             3️⃣ Te redirigirá automáticamente a HTTPS<br>
+             4️⃣ Acepta el certificado cuando aparezca</p>
+             
+             <p><strong>Opción 2 - Directo a HTTPS:</strong></p>
+             <div class="url-box">https://192.168.1.123:8443/inicio.html</div>
+             <p>1️⃣ Copia la URL de arriba<br>
+             2️⃣ Pégala en Safari<br>
+             3️⃣ Cuando aparezca "Esta conexión no es privada":<br>
+             &nbsp;&nbsp;&nbsp;• Toca <strong>"Avanzado"</strong><br>
+             &nbsp;&nbsp;&nbsp;• Toca <strong>"Continuar a 192.168.1.123 (no seguro)"</strong><br>
+             4️⃣ ¡Listo! La app se abrirá</p>
+             
+             <p><strong>Opción 3 - Desactivar "Solo HTTPS":</strong></p>
+             <p>1️⃣ Ve a <strong>Ajustes → Safari</strong><br>
+             2️⃣ Desactiva <strong>"Solo HTTPS"</strong><br>
+             3️⃣ Usa esta URL:</p>
+             <div class="url-box">http://192.168.1.123:8001/inicio.html</div>
+         </div>
+
+        <div class="step android-specific">
+            <h3>🤖 PARA Android (Chrome)</h3>
+            <p><strong>Usa HTTPS (funciona directamente):</strong></p>
+            <div class="url-box">https://192.168.1.123:8443/inicio.html</div>
+            <p>1️⃣ Abre Chrome<br>
+            2️⃣ Pega la URL<br>
+            3️⃣ Si aparece aviso de seguridad, toca <strong>"Avanzado"</strong> → <strong>"Continuar"</strong></p>
+        </div>
+
+        <div class="step">
+            <h3>🔐 Credenciales de Acceso</h3>
+            <div class="credentials">
+                <strong>Administrador:</strong><br>
+                Usuario: <code>admin</code><br>
+                Contraseña: <code>123456</code>
+                <br><br>
+                <strong>Usuario Normal:</strong><br>
+                Usuario: <code>usuario2</code><br>
+                Contraseña: <code>123456</code>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>📲 Instalar como App</h3>
+            <p><strong>iPhone/iPad:</strong><br>
+            Compartir → "Añadir a pantalla de inicio"</p>
+            <p><strong>Android:</strong><br>
+            Menú (⋮) → "Añadir a pantalla de inicio"</p>
+        </div>
+
+        <div class="step">
+            <h3>🔔 Notificaciones</h3>
+            <p>Una vez instalada, la app enviará notificaciones automáticamente cuando haya nuevos comunicados.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+             <a href="http://192.168.1.123:8001/safari-simple.html" class="button" style="background: #34C759; font-weight: bold;">🍎 Safari - Acceso Simplificado ⭐</a>
+             <a href="http://192.168.1.123:8001/safari-help.html" class="button">🍎 Safari - Guía Paso a Paso</a>
+             <a href="http://192.168.1.123:8001/safari-redirect.html" class="button" style="background: #007AFF;">🍎 Safari (Auto-HTTPS)</a>
+             <a href="https://192.168.1.123:8443/inicio.html" class="button">🔒 Acceder con HTTPS</a>
+             <a href="http://192.168.1.123:8001/inicio.html" class="button">🌐 Acceder con HTTP</a>
+             <a href="http://192.168.1.123:8001/pwa-diagnostico.html" class="button" style="background: #FF9500;">🔧 Diagnóstico PWA</a>
+             <a href="http://192.168.1.123:8001/app-descarga.html" class="button" style="background: linear-gradient(45deg, #4CAF50, #45a049); border: 2px solid #fff; font-weight: bold;">📱 DESCARGAR APP ⭐⭐⭐</a>
+             <a href="http://192.168.1.123:8001/pwa-acceso.html" class="button" style="background: #FF6B6B; border: 2px solid #fff; font-weight: bold;">🔧 PWA Manual ⭐⭐</a>
+             <a href="http://192.168.1.123:8001/inicio-simple.html" class="button" style="background: #34C759; border: 2px solid #fff;">🚀 Versión Simple (Sin SW)</a>
+         </div>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+            <p>💡 <strong>Tip:</strong> Si tienes problemas, usa la opción HTTPS y acepta el certificado</p>
+        </div>
+    </div>
+</body>
+</html>
