@@ -147,34 +147,64 @@ HTML_TEMPLATE = """
         }
     </style>
     <script>
+        console.log('JavaScript cargado correctamente');
+        
         async function checkStatus() {
+            console.log('checkStatus() llamada');
             showLoading();
             try {
                 const response = await fetch('/api/status');
                 const data = await response.json();
+                console.log('Datos recibidos:', data);
                 showResult(data, 'success', 'Estado de la API');
             } catch (error) {
+                console.error('Error en checkStatus:', error);
                 showResult({error: 'Error al conectar con la API'}, 'error', 'Error');
             }
         }
         
         async function checkHealth() {
+            console.log('checkHealth() llamada');
             showLoading();
             try {
                 const response = await fetch('/health');
                 const data = await response.json();
+                console.log('Datos de health recibidos:', data);
                 showResult(data, 'success', 'Health Check');
             } catch (error) {
+                console.error('Error en checkHealth:', error);
                 showResult({error: 'Error al verificar el estado de salud'}, 'error', 'Error');
             }
         }
         
         function showLoading() {
+            console.log('showLoading() llamada');
             const resultDiv = document.getElementById('result');
             const contentDiv = document.getElementById('result-content');
-            contentDiv.innerHTML = '<div class="result-box loading">🔄 Cargando...</div>';
-            resultDiv.style.display = 'block';
+            console.log('resultDiv:', resultDiv);
+            console.log('contentDiv:', contentDiv);
+            if (resultDiv && contentDiv) {
+                contentDiv.innerHTML = '<div class="result-box loading">🔄 Cargando...</div>';
+                resultDiv.style.display = 'block';
+            } else {
+                console.error('No se encontraron los elementos result o result-content');
+            }
         }
+        
+        // Test function to verify DOM elements exist
+        function testElements() {
+            console.log('=== TEST DE ELEMENTOS ===');
+            console.log('result div:', document.getElementById('result'));
+            console.log('result-content div:', document.getElementById('result-content'));
+            console.log('Botones:', document.querySelectorAll('.btn'));
+            console.log('Features:', document.querySelectorAll('.feature'));
+        }
+        
+        // Run test when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM cargado completamente');
+            testElements();
+        });
         
         function showResult(data, type, title) {
              const resultDiv = document.getElementById('result');
@@ -193,6 +223,7 @@ HTML_TEMPLATE = """
          }
          
          function showUsers() {
+             console.log('showUsers() llamada');
              const data = {
                  module: 'Gestión de Usuarios',
                  status: 'Activo',
