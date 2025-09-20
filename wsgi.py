@@ -6,7 +6,7 @@ Simple Flask application for production deployment
 """
 
 import os
-from server import app
+from app import app
 
 # Esta es la aplicacion WSGI que Render usara
 application = app
