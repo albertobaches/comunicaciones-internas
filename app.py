@@ -300,22 +300,22 @@ HTML_TEMPLATE = """
         </div>
         
         <div class="features">
-            <div class="feature" onclick="showUsers()" style="cursor: pointer;">
+            <div class="feature" onclick="alert('Gestión de Usuarios - Funcionalidad en desarrollo')" style="cursor: pointer;">
                 <div class="feature-icon">👥</div>
                 <h3>Gestión de Usuarios</h3>
                 <p>Control de acceso y roles</p>
             </div>
-            <div class="feature" onclick="showCommunications()" style="cursor: pointer;">
+            <div class="feature" onclick="alert('Comunicaciones - Funcionalidad en desarrollo')" style="cursor: pointer;">
                 <div class="feature-icon">📨</div>
                 <h3>Comunicaciones</h3>
                 <p>Envío y recepción de mensajes</p>
             </div>
-            <div class="feature" onclick="showSecurity()" style="cursor: pointer;">
+            <div class="feature" onclick="alert('Seguridad - Funcionalidad en desarrollo')" style="cursor: pointer;">
                 <div class="feature-icon">🔒</div>
                 <h3>Seguridad</h3>
                 <p>Autenticación JWT</p>
             </div>
-            <div class="feature" onclick="showMonitoring()" style="cursor: pointer;">
+            <div class="feature" onclick="alert('Monitoreo - Funcionalidad en desarrollo')" style="cursor: pointer;">
                 <div class="feature-icon">📊</div>
                 <h3>Monitoreo</h3>
                 <p>Logs y métricas en tiempo real</p>
@@ -323,8 +323,8 @@ HTML_TEMPLATE = """
         </div>
         
         <div>
-            <button onclick="checkStatus()" class="btn">Ver Estado</button>
-            <button onclick="checkHealth()" class="btn">Health Check</button>
+            <button onclick="alert('Botón Ver Estado funciona!'); window.location.href='/api/status'" class="btn">Ver Estado</button>
+            <button onclick="alert('Botón Health Check funciona!'); window.location.href='/health'" class="btn">Health Check</button>
         </div>
         
         <div id="result" style="margin-top: 2rem; display: none;">
@@ -348,17 +348,55 @@ def home():
 @app.route('/health')
 def health_check():
     """Health check endpoint"""
-    return jsonify({
+    health_data = {
         "status": "healthy",
         "message": "Aplicación funcionando correctamente",
         "version": "1.0.0",
         "timestamp": "2025-01-20"
-    })
+    }
+    
+    # If it's an AJAX request, return JSON
+    if request.headers.get('Content-Type') == 'application/json' or 'application/json' in request.headers.get('Accept', ''):
+        return jsonify(health_data)
+    
+    # Otherwise return HTML page
+    html = f"""
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Health Check - Comunicaciones Internas</title>
+        <style>
+            body {{ font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; }}
+            .container {{ background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; max-width: 500px; }}
+            .status-icon {{ font-size: 4rem; margin-bottom: 1rem; }}
+            h1 {{ color: #28a745; margin-bottom: 1rem; }}
+            .info {{ background: #e8f5e8; padding: 1rem; border-radius: 10px; margin: 1rem 0; text-align: left; }}
+            .back-btn {{ background: #667eea; color: white; padding: 1rem 2rem; border: none; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 1rem; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="status-icon">✅</div>
+            <h1>Sistema Saludable</h1>
+            <div class="info">
+                <strong>Estado:</strong> {health_data['status']}<br>
+                <strong>Mensaje:</strong> {health_data['message']}<br>
+                <strong>Versión:</strong> {health_data['version']}<br>
+                <strong>Fecha:</strong> {health_data['timestamp']}
+            </div>
+            <a href="/" class="back-btn">← Volver al Inicio</a>
+        </div>
+    </body>
+    </html>
+    """
+    return html
 
 @app.route('/api/status')
 def api_status():
     """API status endpoint"""
-    return jsonify({
+    status_data = {
         "api": "Centro de Comunicaciones Internas",
         "status": "online",
         "environment": "production",
@@ -374,7 +412,61 @@ def api_status():
             "status": "successful",
             "auto_deploy": True
         }
-    })
+    }
+    
+    # If it's an AJAX request, return JSON
+    if request.headers.get('Content-Type') == 'application/json' or 'application/json' in request.headers.get('Accept', ''):
+        return jsonify(status_data)
+    
+    # Otherwise return HTML page
+    features_html = "".join([f"<li>✅ {feature}</li>" for feature in status_data['features']])
+    
+    html = f"""
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Estado de la API - Comunicaciones Internas</title>
+        <style>
+            body {{ font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; }}
+            .container {{ background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; max-width: 600px; }}
+            .status-icon {{ font-size: 4rem; margin-bottom: 1rem; }}
+            h1 {{ color: #28a745; margin-bottom: 1rem; }}
+            .info {{ background: #f8f9fa; padding: 1rem; border-radius: 10px; margin: 1rem 0; text-align: left; }}
+            .features {{ background: #e8f5e8; padding: 1rem; border-radius: 10px; margin: 1rem 0; }}
+            .features ul {{ list-style: none; padding: 0; }}
+            .features li {{ margin: 0.5rem 0; }}
+            .deployment {{ background: #d4edda; padding: 1rem; border-radius: 10px; margin: 1rem 0; }}
+            .back-btn {{ background: #667eea; color: white; padding: 1rem 2rem; border: none; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 1rem; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="status-icon">🚀</div>
+            <h1>API en Línea</h1>
+            <div class="info">
+                <strong>API:</strong> {status_data['api']}<br>
+                <strong>Estado:</strong> {status_data['status']}<br>
+                <strong>Entorno:</strong> {status_data['environment']}<br>
+                <strong>Base de datos:</strong> {status_data['database']}
+            </div>
+            <div class="features">
+                <h3>🔧 Funcionalidades Disponibles:</h3>
+                <ul>{features_html}</ul>
+            </div>
+            <div class="deployment">
+                <h3>📦 Información de Despliegue:</h3>
+                <strong>Plataforma:</strong> {status_data['deployment']['platform']}<br>
+                <strong>Estado:</strong> {status_data['deployment']['status']}<br>
+                <strong>Auto-deploy:</strong> {'Activado' if status_data['deployment']['auto_deploy'] else 'Desactivado'}
+            </div>
+            <a href="/" class="back-btn">← Volver al Inicio</a>
+        </div>
+    </body>
+    </html>
+    """
+    return html
 
 @app.route('/favicon.ico')
 def favicon():
