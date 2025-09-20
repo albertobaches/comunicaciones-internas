@@ -1,0 +1,5 @@
+# Dependencias para la aplicación de comunicaciones internas
+# Gunicorn es necesario para el despliegue en Render
+gunicorn==21.2.0
+# PostgreSQL adapter para Render
+psycopg2-binary==2.9.7

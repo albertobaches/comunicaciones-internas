@@ -1,0 +1,29 @@
+<svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#007bff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0056b3;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo circular -->
+  <circle cx="96" cy="96" r="88" fill="url(#gradient)" stroke="#ffffff" stroke-width="8"/>
+  
+  <!-- Icono de mensaje/comunicación -->
+  <g transform="translate(48, 48)">
+    <!-- Sobre principal -->
+    <rect x="8" y="24" width="80" height="56" rx="4" fill="#ffffff" stroke="none"/>
+    
+    <!-- Líneas del sobre -->
+    <path d="M8 32 L48 52 L88 32" stroke="#007bff" stroke-width="3" fill="none" stroke-linecap="round"/>
+    
+    <!-- Puntos de notificación -->
+    <circle cx="76" cy="20" r="8" fill="#ff4757"/>
+    <circle cx="76" cy="20" r="4" fill="#ffffff"/>
+    
+    <!-- Líneas de texto -->
+    <rect x="20" y="44" width="48" height="3" rx="1.5" fill="#007bff" opacity="0.6"/>
+    <rect x="20" y="52" width="36" height="3" rx="1.5" fill="#007bff" opacity="0.4"/>
+    <rect x="20" y="60" width="42" height="3" rx="1.5" fill="#007bff" opacity="0.4"/>
+  </g>
+</svg>

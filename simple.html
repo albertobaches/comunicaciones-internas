@@ -1,0 +1,3337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Centro de Comunicaciones - v3.0 - Persistencia Automática - 1758269692</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Sistema de comunicaciones internas para la empresa">
+    <meta name="theme-color" content="#007bff">
+    <meta name="background-color" content="#ffffff">
+    
+    <!-- iOS Safari Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ComInternas">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- iOS Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="144x144" href="icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="120x120" href="icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="114x114" href="icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="76x76" href="icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="72x72" href="icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="60x60" href="icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="57x57" href="icon-192x192.svg">
+    
+    <!-- Standard PWA Icons -->
+    <link rel="icon" type="image/svg+xml" href="icon-192x192.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.svg">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-192x192.svg">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS Splash Screens -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#007bff">
+    <meta name="msapplication-TileImage" content="icon-192x192.svg">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #e8eaf0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .app-container {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            width: 100%;
+            max-width: 1200px;
+            min-height: 80vh;
+            display: none;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        /* Optimizaciones del header para móvil */
+        @media (max-width: 768px) {
+            .header {
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .new-comm-btn {
+                padding: 10px 18px;
+                font-size: 13px;
+                border-radius: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                margin-bottom: 15px;
+                padding-bottom: 12px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.3em;
+                margin: 0;
+            }
+            
+            .new-comm-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                border-radius: 6px;
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+        
+        .new-comm-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+        }
+        
+        .stat-card.inbox { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .stat-card.sent { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); }
+        .stat-card.urgent { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%); }
+        .stat-card.total { background: linear-gradient(135deg, #9c88ff 0%, #8c7ae6 100%); }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .navigation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .error {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .success {
+            color: #4CAF50;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Estilos para gestión de usuarios */
+        .users-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .user-card {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .user-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .admin-card {
+            border-color: #4CAF50;
+            background: linear-gradient(135deg, #f8fff8 0%, #e8f5e8 100%);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Optimizaciones del user-info para móvil */
+        @media (max-width: 768px) {
+            .user-info {
+                gap: 10px;
+            }
+            
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2em;
+            }
+            
+            .user-details h3 {
+                font-size: 1.1em;
+            }
+            
+            .user-role {
+                font-size: 0.9em;
+            }
+            
+            .user-status {
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-info {
+                gap: 8px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .user-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 1em;
+            }
+            
+            .user-details h3 {
+                font-size: 1em;
+            }
+            
+            .user-role {
+                font-size: 0.8em;
+            }
+            
+            .user-status {
+                font-size: 0.75em;
+            }
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .admin-card .user-avatar {
+            background: #4CAF50;
+        }
+
+        .user-details h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .user-role {
+            color: #666;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .user-status {
+            color: #4CAF50;
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+
+        .btn-action.edit {
+            background: #ffc107;
+            color: white;
+        }
+
+        .btn-action.edit:hover {
+            background: #e0a800;
+        }
+
+        .btn-action.message {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-action.message:hover {
+            background: #138496;
+        }
+
+        .btn-action.delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-action.delete:hover {
+            background: #c82333;
+        }
+
+        /* Estilos para botón de editar */
+        .btn-edit {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+
+        .btn-edit:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        /* Estilos para formulario de edición */
+        .edit-form {
+            display: none;
+            background: #f8f9fa;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .edit-form.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .edit-form h4 {
+            margin: 0 0 15px 0;
+            color: #28a745;
+            font-size: 1.1em;
+        }
+
+        .edit-form-group {
+            margin-bottom: 15px;
+        }
+
+        .edit-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .edit-form-group input,
+        .edit-form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .edit-form-group input:focus,
+        .edit-form-group select:focus {
+            outline: none;
+            border-color: #28a745;
+        }
+
+        .edit-form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .btn-save {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            background: #218838;
+        }
+
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background: #5a6268;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .user-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #e1e5e9;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group small {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        /* Optimizaciones de botones secundarios para móvil */
+        @media (max-width: 768px) {
+            .btn-secondary {
+                padding: 10px 18px;
+                font-size: 13px;
+                border-radius: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn-secondary {
+                padding: 8px 16px;
+                font-size: 12px;
+                border-radius: 6px;
+            }
+        }
+
+        /* Nuevo layout con sidebar */
+        .main-layout {
+            display: flex;
+            height: calc(100vh - 220px);
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Optimizaciones para móvil */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 180px;
+                padding: 12px;
+                border-radius: 12px;
+            }
+            
+            .main-layout {
+                gap: 12px;
+                margin-top: 15px;
+            }
+            
+            .content-area {
+                padding: 20px;
+                border-radius: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 160px;
+                padding: 10px;
+                border-radius: 10px;
+            }
+            
+            .main-layout {
+                gap: 8px;
+                margin-top: 10px;
+                height: calc(100vh - 200px);
+            }
+            
+            .content-area {
+                padding: 15px;
+                border-radius: 10px;
+            }
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-btn {
+            width: 100%;
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            transition: all 0.3s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Optimizaciones de botones para móvil */
+        @media (max-width: 768px) {
+            .sidebar-btn {
+                padding: 12px 15px;
+                font-size: 13px;
+                border-radius: 8px;
+                gap: 8px;
+            }
+            
+            .sidebar-menu li {
+                margin-bottom: 8px;
+            }
+            
+            .sidebar-icon {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-btn {
+                padding: 10px 12px;
+                font-size: 12px;
+                border-radius: 6px;
+                gap: 6px;
+            }
+            
+            .sidebar-menu li {
+                margin-bottom: 6px;
+            }
+            
+            .sidebar-icon {
+                font-size: 14px;
+            }
+        }
+
+        .sidebar-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .sidebar-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .content-area {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .sidebar-icon {
+            font-size: 18px;
+        }
+
+        /* Estilos para la pantalla de comunicado */
+        .btn-back {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-back:hover {
+            background: #5855eb;
+        }
+
+        .comm-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .comm-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .comm-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .comm-form select,
+        .comm-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .comm-form select:focus,
+        .comm-form textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .comm-form textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .comm-form .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* Estilos para la lista de comunicados */
+        .outbox-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-new-comm {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+
+        .btn-new-comm:hover {
+            transform: translateY(-2px);
+        }
+
+        .communications-list {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .communication-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .communication-item:hover {
+            border-color: #6366f1;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .communication-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .comm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .comm-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .comm-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comm-date {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            opacity: 0.7;
+        }
+
+        .delete-btn:hover {
+            background-color: #fee2e2;
+            opacity: 1;
+        }
+
+        .comm-recipient {
+            color: #6366f1;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .comm-preview {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .comm-priority {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        .priority-alta {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .priority-media {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .priority-baja {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .loading-message {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px 20px;
+        }
+
+        .no-communications {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px 20px;
+        }
+
+        /* Panel de detalles del comunicado */
+        .communication-details {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .details-header h3 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 18px;
+        }
+
+        .btn-close {
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .btn-close:hover {
+            background: #dc2626;
+        }
+
+        .details-content {
+            padding: 20px;
+        }
+
+        .detail-field {
+            margin-bottom: 16px;
+        }
+
+        .detail-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-field label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .detail-field span {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .message-content {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            color: #374151;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .details-actions {
+            padding: 20px;
+            border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .reply-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reply-btn:hover {
+            background: #2563eb;
+        }
+
+        .original-message-info {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .original-message-info h3 {
+            margin: 0 0 12px 0;
+            color: #374151;
+            font-size: 16px;
+        }
+
+        .original-message-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-help {
+            display: block;
+            color: #6b7280;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        select[multiple] {
+            min-height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla de Login -->
+    <div id="loginScreen" class="login-container">
+        <h1>Centro de Comunicaciones</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginUsername">Usuario:</label>
+                <input type="text" id="loginUsername" placeholder="Ingresa tu usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Contraseña:</label>
+                <div style="position: relative; display: inline-block; width: 100%;">
+                    <input type="password" id="loginPassword" placeholder="Ingresa tu contraseña" required style="width: 100%; padding-right: 45px; padding: 12px 45px 12px 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;">
+                    <button type="button" onclick="togglePasswordVisibility('loginPassword', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #6b7280; z-index: 10;">👁️</button>
+                </div>
+            </div>
+            <button type="submit" class="btn">Iniciar Sesión</button>
+        </form>
+        <div id="loginError" class="error" style="display: none;"></div>
+    </div>
+
+    <!-- Aplicación Principal -->
+    <div id="appScreen" class="app-container">
+        <div class="header">
+            <div>
+                <h1>Centro de Comunicaciones</h1>
+                <p>Gestiona tus comunicados internos</p>
+                <div id="userInfo" style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                    <!-- Información del usuario se cargará aquí -->
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 15px;">
+                <button class="btn-secondary" onclick="logout()" style="align-self: flex-end;">
+                    🚪 Salir
+                </button>
+                <button class="new-comm-btn" onclick="showNewCommScreen()">
+                    ➕ Nuevo Comunicado
+                </button>
+            </div>
+        </div>
+
+        <!-- Nuevo layout con sidebar -->
+        <div class="main-layout">
+            <!-- Sidebar con menú -->
+            <div class="sidebar">
+                <ul class="sidebar-menu">
+                    <li>
+                        <button class="sidebar-btn active" onclick="showInbox()">
+                            <span class="sidebar-icon">📥</span>
+                            Bandeja de Entrada
+                        </button>
+                    </li>
+                    <li>
+                        <button id="userManagementBtn" class="sidebar-btn" onclick="showContent('users')" style="display: none;">
+                            <span class="sidebar-icon">👥</span>
+                            Lista de Usuarios
+                        </button>
+                    </li>
+                    <li>
+                        <button id="outboxBtn" class="sidebar-btn" onclick="showOutbox()">
+                            <span class="sidebar-icon">📤</span>
+                            Bandeja de Salida
+                        </button>
+                    </li>
+                    <li>
+                        <button class="sidebar-btn" onclick="showContent('templates')">
+                            <span class="sidebar-icon">📋</span>
+                            Plantillas
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Área de contenido -->
+            <div class="content-area">
+                <!-- Bandeja de Entrada -->
+                <div id="inboxContent" class="content-section active">
+                    <h2>📥 Bandeja de Entrada</h2>
+                    
+                    <!-- Lista de comunicados recibidos -->
+                    <div class="communications-list">
+                        <div id="inboxContainer">
+                            <!-- Los comunicados recibidos se cargarán aquí dinámicamente -->
+                            <div class="loading-message">
+                                <p>Cargando mensajes recibidos...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Panel de detalles del mensaje recibido -->
+                    <div id="inboxDetailsPanel" class="details-panel" style="display: none;">
+                        <div class="details-header">
+                            <h3 id="inboxDetailTitle">Título del mensaje</h3>
+                            <button onclick="closeInboxDetails()" class="close-btn">✕</button>
+                        </div>
+                        <div class="details-content">
+                            <div class="detail-row">
+                                <span class="detail-label">De:</span>
+                                <span id="inboxDetailSender">Remitente</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Fecha:</span>
+                                <span id="inboxDetailDate">Fecha</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Hora:</span>
+                                <span id="inboxDetailTime">Hora</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Prioridad:</span>
+                                <span id="inboxDetailPriority" class="priority-badge">Normal</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Mensaje:</span>
+                                <div id="inboxDetailMessage" class="message-content">Contenido del mensaje</div>
+                            </div>
+                        </div>
+                        <div class="details-actions">
+                            <button onclick="replyToMessage()" class="reply-btn">📧 Responder</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de Usuarios -->
+                <div id="usersContent" class="content-section">
+                    <div style="background: #f8f9fa; padding: 40px; border-radius: 10px; text-align: center;">
+                        <h2>👥 Cargando Lista de Usuarios...</h2>
+                        <p style="color: #666; margin: 10px 0 0 0;">La interfaz de usuarios se está cargando.</p>
+                    </div>
+                </div>
+
+                <!-- Bandeja de Salida -->
+                <div id="outboxContent" class="content-section">
+
+                    
+                    <!-- Lista de comunicados enviados -->
+                    <div class="communications-list">
+                        <div id="communicationsContainer">
+                            <!-- Los comunicados se cargarán aquí dinámicamente -->
+                            <div class="loading-message">
+                                <p>Cargando comunicados enviados...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Panel de detalles del comunicado -->
+                    <div id="communicationDetails" class="communication-details" style="display: none;">
+                        <div class="details-header">
+                            <h3 id="detailsTitle">Detalles del Comunicado</h3>
+                            <button class="btn-close" onclick="closeCommunicationDetails()">✕</button>
+                        </div>
+                        <div class="details-content">
+                            <div class="detail-field">
+                                <label>Destinatario:</label>
+                                <span id="detailsRecipient"></span>
+                            </div>
+                            <div class="detail-field">
+                                <label>Fecha de envío:</label>
+                                <span id="detailsDate"></span>
+                            </div>
+                            <div class="detail-field">
+                                <label>Prioridad:</label>
+                                <span id="detailsPriority"></span>
+                            </div>
+                            <div class="detail-field">
+                                <label>Mensaje:</label>
+                                <div id="detailsMessage" class="message-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plantillas -->
+                <div id="templatesContent" class="content-section">
+                    <h2>📋 Plantillas</h2>
+                    <p>Gestiona las plantillas de comunicados.</p>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <p style="color: #666; margin: 0;">No hay plantillas creadas en este momento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Lista de Usuarios -->
+    <div id="userListScreen" class="app-container" style="display: none;">
+        <div class="header">
+            <div>
+                <h1>👥 Lista de Usuarios</h1>
+                <p>Gestiona los usuarios del sistema</p>
+            </div>
+            <div style="text-align: center;">
+                <button class="btn-secondary" onclick="showDashboard()" style="margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;">
+                    ← Volver al Menú Principal
+                </button>
+                <button class="new-comm-btn" onclick="showCreateUserForm()" style="display: block; margin-left: auto; margin-right: auto;">
+                    ➕ Crear Usuario
+                </button>
+            </div>
+        </div>
+
+        <div class="users-container">
+
+            
+            <div id="usersList">
+                <!-- Los usuarios creados aparecerán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Crear/Editar Usuario -->
+    <div id="userFormScreen" class="app-container" style="display: none;">
+        <div class="header">
+            <div>
+                <h1 id="userFormTitle">➕ Crear Nuevo Usuario</h1>
+                <p>Completa los datos del usuario</p>
+            </div>
+            <div>
+                <button class="btn-secondary" onclick="backToUserList()">
+                    ← Volver a Lista
+                </button>
+                <button class="btn-secondary" onclick="showDashboard()" style="margin-left: 10px;">
+                    🏠 Menú Principal
+                </button>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form id="userForm" class="user-form">
+                <div class="form-group">
+                    <label for="username">Nombre del Usuario:</label>
+                    <input type="text" id="username" name="username" placeholder="Ej: María García o solo María" required>
+                    <small>Puedes escribir solo el nombre o nombre y apellidos</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Rol del Usuario:</label>
+                    <select id="role" name="role" required>
+                        <option value="">Selecciona un rol</option>
+                        <option value="admin">👑 Administrador</option>
+                        <option value="Ejecutiva">Ejecutiva</option>
+                        <option value="RRHH">Recursos Humanos</option>
+                        <option value="Finanzas">Finanzas</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Ventas">Ventas</option>
+                        <option value="Operaciones">Operaciones</option>
+                        <option value="IT">Tecnología</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Empleado">Empleado General</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <div style="position: relative; display: inline-block; width: 100%;">
+                        <input type="password" id="password" name="password" placeholder="Asigna una contraseña" style="width: 100%; padding: 12px 45px 12px 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;">
+                        <button type="button" onclick="togglePasswordVisibility('password', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #6b7280; z-index: 10;">👁️</button>
+                    </div>
+                    <small>Esta contraseña permitirá al usuario acceder al sistema</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn">
+                        <span id="submitButtonText">Guardar</span>
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="showUserList()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pantalla de Nuevo Comunicado -->
+    <div id="newCommScreen" class="app-container" style="display: none;">
+        <div class="header">
+            <button class="btn-back" onclick="showMainMenu()">
+                ← Atrás
+            </button>
+            <h1>📄 Contenido del Mensaje</h1>
+        </div>
+
+        <div class="form-container">
+            <form id="commForm" class="comm-form">
+                <div class="form-group">
+                    <label for="destinatario">Destinatario</label>
+                    <select id="destinatario" name="destinatario" required>
+                        <option value="">Seleccionar destinatario...</option>
+                        <option value="todos">Todos los usuarios</option>
+                        <!-- Los usuarios se cargarán dinámicamente aquí -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." rows="8" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="prioridad">Prioridad</label>
+                    <select id="prioridad" name="prioridad" required>
+                        <option value="normal">Normal</option>
+                        <option value="alta">Alta</option>
+                        <option value="urgente">Urgente</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn">
+                        📤 Enviar Comunicado
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="showMainMenu()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pantalla de Respuesta a Mensaje -->
+    <div id="replyScreen" class="app-container" style="display: none;">
+        <div class="header">
+            <button class="btn-back" onclick="cancelReply()">
+                ← Atrás
+            </button>
+            <h1>📧 Responder Mensaje</h1>
+        </div>
+
+        <div class="form-container">
+            <!-- Información del mensaje original -->
+            <div class="original-message-info">
+                <h3>📩 Mensaje Original</h3>
+                <div class="original-message-details">
+                    <div class="detail-row">
+                        <span class="detail-label">De:</span>
+                        <span id="originalSender">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Asunto:</span>
+                        <span id="originalSubject">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <form id="replyForm" class="comm-form">
+                <div class="form-group">
+                    <label for="replyDestinatario">Para (Destinatario Principal)</label>
+                    <input type="text" id="replyDestinatario" name="destinatario" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="replyCopia">Con Copia a: (Opcional)</label>
+                    <select id="replyCopia" name="copia" multiple>
+                        <option value="">Seleccionar usuarios para copia...</option>
+                        <!-- Los usuarios se cargarán dinámicamente aquí -->
+                    </select>
+                    <small class="form-help">Mantén presionado Ctrl (Cmd en Mac) para seleccionar múltiples usuarios</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="replyAsunto">Asunto</label>
+                    <input type="text" id="replyAsunto" name="asunto" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="replyMensaje">Tu Respuesta</label>
+                    <textarea id="replyMensaje" name="mensaje" placeholder="Escribe tu respuesta aquí..." rows="8" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="replyPrioridad">Prioridad</label>
+                    <select id="replyPrioridad" name="prioridad" required>
+                        <option value="normal">Normal</option>
+                        <option value="alta">Alta</option>
+                        <option value="urgente">Urgente</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn">
+                        📤 Enviar Respuesta
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="cancelReply()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Variable global para el usuario actual
+        let currentUser = null;
+        let authToken = null;
+
+        // Elementos del DOM
+        const loginScreen = document.getElementById('loginScreen');
+        const appScreen = document.getElementById('appScreen');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+
+        // Función para obtener el token de autorización
+        function getAuthToken() {
+            return authToken || localStorage.getItem('authToken');
+        }
+
+        // Función para guardar el token
+        function saveAuthToken(token) {
+            authToken = token;
+            localStorage.setItem('authToken', token);
+        }
+
+        // Función para limpiar el token
+        function clearAuthToken() {
+            authToken = null;
+            localStorage.removeItem('authToken');
+        }
+
+        // Función para verificar si el token es válido
+        async function verifyToken() {
+            const token = getAuthToken();
+            if (!token) return false;
+
+            try {
+                const response = await fetch('/verify-token', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    currentUser = result.user;
+                    return true;
+                } else {
+                    clearAuthToken();
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error verificando token:', error);
+                clearAuthToken();
+                return false;
+            }
+        }
+
+        // Función para autenticar usuario con JWT
+        async function authenticateUser(username, password) {
+            try {
+                const response = await fetch('/authenticate-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success && result.token) {
+                        saveAuthToken(result.token);
+                    }
+                    return result;
+                } else if (response.status === 401) {
+                    return { success: false, message: 'Usuario o contraseña incorrecta' };
+                } else {
+                    return { success: false, message: 'Error de conexión con el servidor' };
+                }
+            } catch (error) {
+                console.error('Error en autenticación:', error);
+                return { success: false, message: 'Usuario o contraseña incorrecta' };
+            }
+        }
+
+        // Función para actualizar la interfaz basada en el usuario
+        function updateUserInterface() {
+            if (!currentUser) return;
+            
+            // Mostrar información del usuario
+            const userInfo = document.getElementById('userInfo');
+            const roleDisplay = currentUser.role === 'admin' ? 'Administrador' : 
+                               currentUser.role === 'operaciones' ? 'Operaciones' :
+                               currentUser.role === 'finanzas' ? 'Finanzas' :
+                               currentUser.role === 'ejecutiva' ? 'Ejecutiva' :
+                               currentUser.role === 'rrhh' ? 'RRHH' :
+                               currentUser.role === 'marketing' ? 'Marketing' :
+                               currentUser.role === 'ventas' ? 'Ventas' :
+                               currentUser.role === 'soporte' ? 'Soporte' :
+                               currentUser.role === 'gerencia' ? 'Gerencia' :
+                               currentUser.role;
+            
+            userInfo.innerHTML = `
+                <span style="font-weight: bold;">👤 ${currentUser.username}</span> 
+                <span style="margin-left: 10px; padding: 4px 8px; background: ${currentUser.role === 'admin' ? '#4CAF50' : '#667eea'}; color: white; border-radius: 12px; font-size: 0.8em;">
+                    ${currentUser.role === 'admin' ? '👑' : '🔹'} ${roleDisplay}
+                </span>
+            `;
+            
+            // Controlar acceso a gestión de usuarios (solo administradores)
+            const userManagementCard = document.getElementById('userManagementCard');
+            const userManagementBtn = document.getElementById('userManagementBtn');
+            
+            if (currentUser.role === 'admin') {
+                if (userManagementCard) userManagementCard.style.display = 'block';
+                if (userManagementBtn) userManagementBtn.style.display = 'block';
+            } else {
+                if (userManagementCard) userManagementCard.style.display = 'none';
+                if (userManagementBtn) userManagementBtn.style.display = 'none';
+            }
+            
+            console.log(`🔐 Interfaz actualizada para ${currentUser.username} (${roleDisplay})`);
+            
+            // Mostrar la bandeja de entrada por defecto
+            showInbox();
+        }
+
+        // Función para cerrar sesión
+        function logout() {
+            clearAuthToken();
+            currentUser = null;
+            loginScreen.style.display = 'block';
+            appScreen.style.display = 'none';
+            document.getElementById('userListScreen').style.display = 'none';
+            document.getElementById('userFormScreen').style.display = 'none';
+            
+            // Limpiar información del usuario
+            document.getElementById('userInfo').innerHTML = '';
+            
+            // Limpiar formulario de login
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            loginError.style.display = 'none';
+            
+            console.log('🚪 Sesión cerrada');
+        }
+
+        // Manejar el login
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            if (!username || !password) {
+                loginError.textContent = 'Por favor ingresa usuario y contraseña';
+                loginError.style.display = 'block';
+                return;
+            }
+
+            // Mostrar indicador de carga
+            loginError.textContent = 'Verificando credenciales...';
+            loginError.style.display = 'block';
+            loginError.style.color = '#007bff';
+
+            // Autenticar con la base de datos
+            const authResult = await authenticateUser(username, password);
+            
+            if (authResult.success) {
+                // Login exitoso
+                currentUser = authResult.user;
+                console.log('✅ Usuario autenticado:', currentUser);
+                
+                loginScreen.style.display = 'none';
+                appScreen.style.display = 'block';
+                loginError.style.display = 'none';
+                
+                // Mostrar información del usuario
+                updateUserInterface();
+                
+                // Mostrar información del usuario en consola
+                console.log(`🎉 Bienvenido ${currentUser.username} (${currentUser.role})`);
+            } else {
+                // Login fallido
+                loginError.textContent = authResult.message || 'Usuario o contraseña incorrecta';
+                loginError.style.display = 'block';
+                loginError.style.color = '#dc3545';
+            }
+        });
+
+        // Mostrar usuarios disponibles en consola para debug
+        console.log('🔍 Sistema de autenticación con base de datos SQLite activo');
+        console.log('💡 Usuarios disponibles: admin, esto2, esto4, usuario1');
+
+        // Sistema de gestión de usuarios - DATOS PERSISTENTES CON SQLITE
+        // *** INICIO_DATOS_USUARIOS ***
+        
+        // Variable global para usuarios
+        let users = [];
+
+        // Función para cargar usuarios desde la API SQLite
+        async function loadUsersFromAPI() {
+            try {
+                console.log('🔄 Cargando usuarios desde SQLite...');
+                const token = getAuthToken();
+                
+                const response = await fetch('/get-users', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        console.log('🔒 Token inválido, redirigiendo al login');
+                        logout();
+                        return [];
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Usuarios cargados desde SQLite:', data.users.length, 'usuarios');
+                
+                // Convertir formato de base de datos a formato de la app
+                const formattedUsers = data.users.map(user => ({
+                    id: user.id,
+                    username: user.username,
+                    password: user.password,
+                    role: user.role, // Mantener el role original para el servidor
+                    displayRole: user.role === 'admin' ? 'Administrador' : 
+                                user.role === 'operaciones' ? 'Operaciones' :
+                                user.role === 'finanzas' ? 'Finanzas' :
+                                user.role === 'ejecutiva' ? 'Ejecutiva' :
+                                user.role === 'rrhh' ? 'RRHH' :
+                                user.role === 'marketing' ? 'Marketing' :
+                                user.role === 'ventas' ? 'Ventas' :
+                                user.role === 'soporte' ? 'Soporte' :
+                                user.role === 'gerencia' ? 'Gerencia' :
+                                user.role, // Si no coincide con ninguno, mostrar el rol tal como está
+                    isAdmin: user.role === 'admin',
+                    createdAt: new Date().toISOString()
+                }));
+                
+                return formattedUsers;
+            } catch (error) {
+                console.error('❌ Error al cargar usuarios desde SQLite:', error);
+                return [];
+            }
+        }
+
+        // Función para agregar usuario a la API SQLite
+        async function addUserToAPI(userData) {
+            try {
+                console.log('➕ Agregando usuario a SQLite:', userData.username);
+                const token = getAuthToken();
+                
+                const response = await fetch('/add-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        username: userData.username,
+                        password: userData.password,
+                        role: userData.role
+                    })
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        console.log('🔒 Token inválido, redirigiendo al login');
+                        logout();
+                        return false;
+                    }
+                    if (response.status === 403) {
+                        showMessage('No tienes permisos para agregar usuarios', 'error');
+                        return false;
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                console.log('✅ Usuario agregado a SQLite:', result);
+                return true;
+            } catch (error) {
+                console.error('❌ Error al agregar usuario a SQLite:', error);
+                return false;
+            }
+        }
+
+        // Función para eliminar usuario de la API SQLite
+        async function deleteUserFromAPI(userId) {
+            try {
+                console.log('🗑️ DEBUG: Eliminando usuario de SQLite, ID:', userId, 'tipo:', typeof userId);
+                const token = getAuthToken();
+                const requestBody = { user_id: userId };
+                console.log('🗑️ DEBUG: Request body:', JSON.stringify(requestBody));
+                
+                const response = await fetch('/delete-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                console.log('🗑️ DEBUG: Response status:', response.status, 'ok:', response.ok);
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        console.log('🔒 Token inválido, redirigiendo al login');
+                        logout();
+                        return false;
+                    }
+                    if (response.status === 403) {
+                        showMessage('No tienes permisos para eliminar usuarios', 'error');
+                        return false;
+                    }
+                    const errorText = await response.text();
+                    console.log('🗑️ DEBUG: Error response text:', errorText);
+                    throw new Error(`HTTP error! status: ${response.status}, text: ${errorText}`);
+                }
+                
+                const result = await response.json();
+                console.log('✅ DEBUG: Usuario eliminado de SQLite:', result);
+                return true;
+            } catch (error) {
+                console.error('❌ DEBUG: Error al eliminar usuario de SQLite:', error);
+                return false;
+            }
+        }
+
+
+
+        // Cargar usuarios al iniciar la aplicación
+        async function initializeUsers() {
+            users = await loadUsersFromAPI();
+            console.log('✅ Usuarios cargados desde SQLite:', users.length);
+        }
+
+
+
+        // *** FIN_DATOS_USUARIOS ***
+
+        // Función para recargar usuarios desde SQLite
+        async function refreshUsers() {
+            try {
+                users = await loadUsersFromAPI();
+                // Solo actualizar la vista si estamos en la pantalla de usuarios
+                if (document.getElementById('userListScreen').style.display !== 'none') {
+                    renderUserList();
+                }
+                console.log('🔄 Usuarios actualizados desde SQLite');
+            } catch (error) {
+                console.error('❌ Error al actualizar usuarios:', error);
+            }
+        }
+
+        // Función para mostrar mensajes (reemplaza saveUsers)
+        function showMessage(message, type = 'success') {
+            // Crear elemento de mensaje
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 10px;
+                color: white;
+                font-weight: bold;
+                z-index: 1000;
+                background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+            `;
+            messageDiv.textContent = message;
+            
+            document.body.appendChild(messageDiv);
+            
+            // Remover después de 3 segundos
+            setTimeout(() => {
+                document.body.removeChild(messageDiv);
+            }, 3000);
+        }
+
+        // Función para verificar persistencia con SQLite (para testing)
+        async function testPersistence() {
+            console.log('🧪 PRUEBA DE PERSISTENCIA SQLite:');
+            console.log('📊 Usuarios actuales en memoria:', users.length);
+            
+            const apiUsers = await loadUsersFromAPI();
+            console.log('💾 Usuarios en SQLite:', apiUsers.length);
+            
+            console.log('🔍 Contenido SQLite:');
+            apiUsers.forEach((user, index) => {
+                console.log(`  ${index + 1}. ${user.username} (${user.role})`);
+            });
+            
+            return apiUsers.length > 0;
+        }
+
+
+        // Mostrar lista de usuarios
+        function showUserList() {
+            // Verificar permisos de administrador
+            if (!currentUser || currentUser.role !== 'admin') {
+                showMessage('No tienes permisos para acceder a la gestión de usuarios', 'error');
+                console.log('🚫 Acceso denegado a gestión de usuarios');
+                return;
+            }
+            
+            // Ocultar la pantalla principal y mostrar la pantalla de usuarios
+            document.getElementById('appScreen').style.display = 'none';
+            document.getElementById('userListScreen').style.display = 'block';
+            
+            renderUserList();
+        }
+
+        // Renderizar lista de usuarios
+        function renderUserList() {
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = '';
+
+            users.forEach(user => {
+                const userCard = document.createElement('div');
+                userCard.className = `user-card ${user.isAdmin ? 'admin-card' : ''}`;
+                
+                userCard.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            ${user.isAdmin ? '👑' : '👤'}
+                        </div>
+                        <div class="user-details">
+                            <h3>${user.username}</h3>
+                            <div class="user-role">${user.displayRole}</div>
+                            <button class="btn-edit" onclick="toggleEditForm(${user.id})" title="Editar usuario">
+                                ✏️ Editar
+                            </button>
+                        </div>
+                    </div>
+                    <div id="userActions${user.id}" class="user-actions" ${user.isAdmin ? 'style="display: none;"' : ''}>
+                        <button class="btn-action delete" onclick="deleteUser(${user.id})" title="Eliminar usuario">
+                            🗑️
+                        </button>
+                    </div>
+                    <div id="editForm${user.id}" class="edit-form">
+                        <h4>✏️ Editar Usuario: ${user.username}</h4>
+                        <div class="edit-form-group">
+                            <label for="editUsername${user.id}">Nombre de usuario:</label>
+                            <input type="text" id="editUsername${user.id}" value="${user.username}" placeholder="Nuevo nombre de usuario">
+                        </div>
+                        <div class="edit-form-group">
+                            <label for="editPassword${user.id}">Contraseña:</label>
+                            <input type="text" id="editPassword${user.id}" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;">
+                        </div>
+                        <div class="edit-form-group">
+                            <label for="editRole${user.id}">Rol:</label>
+                            <select id="editRole${user.id}">
+                                <option value="">Selecciona un rol</option>
+                                <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>👑 Administrador</option>
+                                <option value="Ejecutiva" ${user.role === 'Ejecutiva' ? 'selected' : ''}>Ejecutiva</option>
+                                <option value="RRHH" ${user.role === 'RRHH' ? 'selected' : ''}>Recursos Humanos</option>
+                                <option value="Finanzas" ${user.role === 'Finanzas' ? 'selected' : ''}>Finanzas</option>
+                                <option value="Marketing" ${user.role === 'Marketing' ? 'selected' : ''}>Marketing</option>
+                                <option value="Ventas" ${user.role === 'Ventas' ? 'selected' : ''}>Ventas</option>
+                                <option value="Operaciones" ${user.role === 'Operaciones' ? 'selected' : ''}>Operaciones</option>
+                                <option value="IT" ${user.role === 'IT' ? 'selected' : ''}>Tecnología</option>
+                                <option value="Legal" ${user.role === 'Legal' ? 'selected' : ''}>Legal</option>
+                                <option value="Empleado" ${user.role === 'Empleado' ? 'selected' : ''}>Empleado General</option>
+                            </select>
+                        </div>
+                        <div class="edit-form-actions">
+                            <button class="btn-cancel" onclick="cancelEdit(${user.id})">Cancelar</button>
+                            <button class="btn-save" onclick="saveUserChanges(${user.id})">Guardar cambios</button>
+                        </div>
+                    </div>
+                `;
+                
+                usersList.appendChild(userCard);
+                
+                // Establecer la contraseña después de crear el elemento (para compatibilidad con navegadores integrados)
+                setTimeout(() => {
+                    const passwordField = document.getElementById(`editPassword${user.id}`);
+                    if (passwordField) {
+                        passwordField.value = user.password;
+                    }
+                }, 0);
+            });
+        }
+
+        // Mostrar formulario de creación de usuario
+        function showCreateUserForm() {
+            document.getElementById('userListScreen').style.display = 'none';
+            document.getElementById('userFormScreen').style.display = 'block';
+            
+            // Limpiar formulario
+            document.getElementById('userForm').reset();
+            
+            // Restaurar placeholder original del password
+            document.getElementById('password').placeholder = 'Asigna una contraseña';
+            
+            document.getElementById('formTitle').textContent = 'Crear Nuevo Usuario';
+            document.getElementById('submitButtonText').textContent = 'Crear Usuario';
+            
+
+        }
+
+        // Manejar envío del formulario
+        document.getElementById('userForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const userData = {
+                username: formData.get('username'),
+                password: formData.get('password'),
+                role: formData.get('role'),
+                isAdmin: false,
+                createdAt: new Date().toISOString()
+            };
+
+            // Crear nuevo usuario - validar que la contraseña no esté vacía
+            if (!userData.password || userData.password.trim() === '') {
+                showMessage('La contraseña es requerida para crear un nuevo usuario', 'error');
+                return;
+            }
+                
+            // Crear nuevo usuario usando SQLite
+            const success = await addUserToAPI(userData);
+            if (success) {
+                showMessage('Usuario creado exitosamente', 'success');
+                await refreshUsers(); // Recargar usuarios desde SQLite
+                backToUserList();
+            } else {
+                showMessage('Error al crear usuario', 'error');
+            }
+        });
+
+
+
+        // Eliminar usuario
+        async function deleteUser(userId) {
+            console.log('🔍 DEBUG: deleteUser llamado con userId:', userId, 'tipo:', typeof userId);
+            const user = users.find(u => u.id === userId);
+            console.log('🔍 DEBUG: usuario encontrado:', user);
+            if (!user) {
+                console.log('❌ DEBUG: Usuario no encontrado en array local');
+                return;
+            }
+
+            if (confirm(`¿Estás seguro de que quieres eliminar al usuario "${user.username}"?`)) {
+                console.log('🔍 DEBUG: Confirmación aceptada, llamando deleteUserFromAPI con:', userId);
+                const success = await deleteUserFromAPI(userId);
+                console.log('🔍 DEBUG: Resultado de deleteUserFromAPI:', success);
+                if (success) {
+                    showMessage('Usuario eliminado exitosamente', 'success');
+                    await refreshUsers(); // Recargar usuarios desde SQLite
+                } else {
+                    showMessage('Error al eliminar usuario', 'error');
+                }
+            }
+        }
+
+        // Enviar comunicado a usuario específico
+        function sendMessageToUser(userId) {
+            const user = users.find(u => u.id === userId);
+            if (!user) return;
+
+            alert(`Función para enviar comunicado a ${user.username} será implementada próximamente`);
+        }
+
+        // Volver a la lista de usuarios
+        function backToUserList() {
+            document.getElementById('userFormScreen').style.display = 'none';
+            document.getElementById('userListScreen').style.display = 'block';
+            
+            // Limpiar el formulario
+            document.getElementById('userForm').reset();
+            
+            renderUserList();
+        }
+
+        // Volver al dashboard principal
+        function showDashboard() {
+            // Ocultar pantallas de usuarios
+            document.getElementById('userListScreen').style.display = 'none';
+            document.getElementById('userFormScreen').style.display = 'none';
+            
+            // Mostrar la pantalla principal de la aplicación
+            document.getElementById('appScreen').style.display = 'block';
+            
+            // Ocultar todas las secciones de contenido
+            const contentSections = document.querySelectorAll('.content-section');
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remover clase active de todos los botones del sidebar
+            const sidebarButtons = document.querySelectorAll('.sidebar-btn');
+            sidebarButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Activar el botón de bandeja de entrada por defecto
+            const inboxButton = document.querySelector('.sidebar-btn[onclick*="inbox"]');
+            if (inboxButton) {
+                inboxButton.classList.add('active');
+            }
+
+            // Mostrar la sección de bandeja de entrada por defecto
+            const inboxContent = document.getElementById('inboxContent');
+            if (inboxContent) {
+                inboxContent.classList.add('active');
+                // Cargar mensajes de la bandeja de entrada
+                loadInboxCommunications();
+            }
+        }
+
+        // Función de compatibilidad
+        function backToDashboard() {
+            showDashboard();
+        }
+
+        // Cancelar formulario
+        function cancelUserForm() {
+            if (confirm('¿Estás seguro de que quieres cancelar? Los cambios no guardados se perderán.')) {
+                backToUserList();
+            }
+        }
+
+        // Función para cerrar sesión
+        function logout() {
+            loginScreen.style.display = 'block';
+            appScreen.style.display = 'none';
+            
+            // Limpiar campos de login
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            loginError.style.display = 'none';
+            
+            // Limpiar usuario actual
+            currentUser = null;
+            console.log('🚪 Sesión cerrada');
+        }
+
+        // ===== FUNCIONES UNIVERSALES DE EDICIÓN =====
+        
+        // Alternar formulario de edición (UNIVERSAL - funciona con cualquier ID)
+        function toggleEditForm(userId) {
+            console.log('🔍 DEBUG: toggleEditForm llamado con userId:', userId, 'tipo:', typeof userId);
+            
+            // Cerrar todos los formularios de edición abiertos y mostrar sus botones
+            const allEditForms = document.querySelectorAll('.edit-form');
+            const allUserActions = document.querySelectorAll('.user-actions');
+            allEditForms.forEach((form, index) => {
+                if (form.id !== `editForm${userId}`) {
+                    form.classList.remove('active');
+                    // Mostrar los botones de acciones del usuario correspondiente
+                    if (allUserActions[index]) {
+                        allUserActions[index].style.display = 'flex';
+                    }
+                }
+            });
+            
+            // Alternar el formulario específico
+            const editForm = document.getElementById(`editForm${userId}`);
+            const userActions = document.getElementById(`userActions${userId}`);
+            
+            if (editForm) {
+                const isActive = editForm.classList.contains('active');
+                editForm.classList.toggle('active');
+                
+                // Ocultar/mostrar botones de la izquierda según el estado del formulario
+                if (userActions) {
+                    if (isActive) {
+                        // Si se está cerrando el formulario, mostrar los botones
+                        userActions.style.display = 'flex';
+                    } else {
+                        // Si se está abriendo el formulario, ocultar los botones
+                        userActions.style.display = 'none';
+                        
+                        // Cargar valores actuales del usuario
+                        const user = users.find(u => u.id === userId);
+                        if (user) {
+                            document.getElementById(`editUsername${userId}`).value = user.username;
+                            document.getElementById(`editPassword${userId}`).value = user.password;
+                            document.getElementById(`editRole${userId}`).value = user.role;
+                        }
+                    }
+                }
+                
+                console.log('✅ DEBUG: Formulario de edición alternado para usuario:', userId);
+            } else {
+                console.error('❌ DEBUG: No se encontró formulario de edición para usuario:', userId);
+            }
+        }
+
+        // Cancelar edición (UNIVERSAL - funciona con cualquier ID)
+        function cancelEdit(userId) {
+            console.log('🔍 DEBUG: cancelEdit llamado con userId:', userId);
+            const editForm = document.getElementById(`editForm${userId}`);
+            const userActions = document.getElementById(`userActions${userId}`);
+            
+            if (editForm) {
+                editForm.classList.remove('active');
+                
+                // Mostrar los botones de la izquierda
+                if (userActions) {
+                    userActions.style.display = 'flex';
+                }
+                
+                // Restaurar valores originales
+                const user = users.find(u => u.id === userId);
+                if (user) {
+                    document.getElementById(`editUsername${userId}`).value = user.username;
+                    document.getElementById(`editPassword${userId}`).value = user.password;
+                    document.getElementById(`editRole${userId}`).value = user.role;
+                }
+                console.log('✅ DEBUG: Edición cancelada para usuario:', userId);
+            }
+        }
+
+        // Guardar cambios del usuario (UNIVERSAL - funciona con cualquier ID)
+        async function saveUserChanges(userId) {
+            console.log('🔍 DEBUG: saveUserChanges llamado con userId:', userId, 'tipo:', typeof userId);
+            
+            try {
+                // Obtener valores del formulario
+                const newUsername = document.getElementById(`editUsername${userId}`).value.trim();
+                const newPassword = document.getElementById(`editPassword${userId}`).value.trim();
+                const newRole = document.getElementById(`editRole${userId}`).value;
+                
+                // Validaciones frontend
+                if (!newUsername) {
+                    showMessage('El nombre de usuario es requerido', 'error');
+                    return;
+                }
+                
+                if (newUsername.length < 3) {
+                    showMessage('El nombre de usuario debe tener al menos 3 caracteres', 'error');
+                    return;
+                }
+                
+                // Verificar si el username ya existe (excluyendo el usuario actual)
+                const existingUser = users.find(u => u.username.toLowerCase() === newUsername.toLowerCase() && u.id !== userId);
+                if (existingUser) {
+                    showMessage('Ya existe un usuario con ese nombre', 'error');
+                    return;
+                }
+                
+                // Preparar datos para actualización
+                const updateData = {
+                    user_id: userId,
+                    username: newUsername,
+                    role: newRole
+                };
+                
+                // Solo incluir contraseña si se proporcionó una nueva
+                if (newPassword) {
+                    updateData.password = newPassword;
+                }
+                
+                console.log('🔍 DEBUG: Datos a enviar:', updateData);
+                
+                // Llamar al endpoint /update-user
+                const success = await updateUserInAPI(updateData);
+                
+                if (success) {
+                    showMessage(`Usuario ${newUsername} actualizado exitosamente`, 'success');
+                    
+                    // Cerrar formulario de edición y mostrar botones
+                    const editForm = document.getElementById(`editForm${userId}`);
+                    const userActions = document.getElementById(`userActions${userId}`);
+                    
+                    if (editForm) {
+                        editForm.classList.remove('active');
+                    }
+                    
+                    if (userActions) {
+                        userActions.style.display = 'flex';
+                    }
+                    
+                    // Recargar usuarios desde SQLite
+                    await refreshUsers();
+                } else {
+                    showMessage('Error al actualizar usuario', 'error');
+                }
+                
+            } catch (error) {
+                console.error('❌ ERROR en saveUserChanges:', error);
+                showMessage('Error inesperado al actualizar usuario', 'error');
+            }
+        }
+
+        // Función para actualizar usuario en la API (UNIVERSAL)
+        async function updateUserInAPI(userData) {
+            try {
+                console.log('🔍 DEBUG: updateUserInAPI llamado con:', userData);
+                const token = getAuthToken();
+                
+                const response = await fetch('/update-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(userData)
+                });
+                
+                console.log('🔍 DEBUG: Respuesta del servidor:', response.status, response.statusText);
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ DEBUG: Usuario actualizado exitosamente:', result);
+                    return true;
+                } else {
+                    if (response.status === 401) {
+                        console.log('🔒 Token inválido, redirigiendo al login');
+                        logout();
+                        return false;
+                    }
+                    if (response.status === 403) {
+                        showMessage('No tienes permisos para actualizar usuarios', 'error');
+                        return false;
+                    }
+                    const errorData = await response.json();
+                    console.error('❌ DEBUG: Error del servidor:', errorData);
+                    showMessage(errorData.error || 'Error al actualizar usuario', 'error');
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ ERROR en updateUserInAPI:', error);
+                showMessage('Error de conexión al actualizar usuario', 'error');
+                return false;
+            }
+        }
+
+        // Función para mostrar/ocultar contraseña
+        function togglePasswordVisibility(inputId, button) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+
+        // Inicializar la aplicación cuando se carga la página
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 Inicializando aplicación con SQLite...');
+            
+            // Verificar si hay un token válido guardado
+            const isTokenValid = await verifyToken();
+            
+            if (isTokenValid && currentUser) {
+                // Token válido, mostrar aplicación directamente
+                console.log('✅ Token válido encontrado, manteniendo sesión');
+                loginScreen.style.display = 'none';
+                appScreen.style.display = 'block';
+                updateUserInterface();
+                await initializeUsers();
+            } else {
+                // No hay token válido, mostrar login
+                console.log('🔒 No hay token válido, mostrando login');
+                loginScreen.style.display = 'block';
+                appScreen.style.display = 'none';
+            }
+        });
+
+        // Función para mostrar contenido en el área principal
+        function showContent(section) {
+            // Ocultar todas las pantallas con verificación de existencia
+            const elementsToHide = ['mainMenu', 'newCommScreen', 'outboxContent', 'inboxContent', 'usersContent', 'templatesContent', 'replyScreen', 'inboxDetailsPanel'];
+            elementsToHide.forEach(elementId => {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.style.display = 'none';
+                    element.classList.remove('active');
+                }
+            });
+
+            // Ocultar todas las secciones de contenido
+            const contentSections = document.querySelectorAll('.content-section');
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remover clase active de todos los botones del sidebar
+            const sidebarButtons = document.querySelectorAll('.sidebar-btn');
+            sidebarButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mostrar la pantalla/sección solicitada
+            switch(section) {
+                case 'main':
+                    const mainMenu = document.getElementById('mainMenu');
+                    if (mainMenu) mainMenu.style.display = 'block';
+                    break;
+                case 'newComm':
+                    const newCommScreen = document.getElementById('newCommScreen');
+                    if (newCommScreen) newCommScreen.style.display = 'block';
+                    break;
+                case 'sent':
+                case 'outbox':
+                    const outboxContent = document.getElementById('outboxContent');
+                    if (outboxContent) {
+                        outboxContent.style.display = 'block';
+                        outboxContent.classList.add('active');
+                    }
+                    loadSentCommunications();
+                    break;
+                case 'inbox':
+                    const inboxContent = document.getElementById('inboxContent');
+                    if (inboxContent) {
+                        inboxContent.style.display = 'block';
+                        inboxContent.classList.add('active');
+                    }
+                    loadInboxCommunications();
+                    break;
+                case 'users':
+                    const usersScreen = document.getElementById('usersScreen');
+                    if (usersScreen) usersScreen.style.display = 'block';
+                    showUserList();
+                    break;
+                case 'reply':
+                    const replyScreen = document.getElementById('replyScreen');
+                    if (replyScreen) replyScreen.style.display = 'block';
+                    break;
+                default:
+                    // Para secciones de contenido normales
+                    const targetContent = document.getElementById(section + 'Content');
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                    break;
+            }
+
+            // Activar el botón correspondiente
+            if (typeof event !== 'undefined' && event.target) {
+                const activeButton = event.target.closest('.sidebar-btn');
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+            }
+
+            // Si es la sección de usuarios, mostrar la interfaz original de usuarios
+            if (section === 'users') {
+                showUserList();
+            }
+            
+            // Si es la bandeja de entrada, cargar mensajes recibidos
+            if (section === 'inbox') {
+                loadInboxCommunications();
+            }
+        }
+
+
+
+        // Funciones para el sidebar de usuarios
+        function editUser(userId) {
+            // Usar la funcionalidad original de edición
+            toggleEditForm(userId);
+        }
+
+        // Funciones para la pantalla de comunicado
+        async function loadUsersInDestinationSelector() {
+            const destinatarioSelect = document.getElementById('destinatario');
+            
+            if (!destinatarioSelect) {
+                console.error('❌ No se encontró el elemento select destinatario');
+                return;
+            }
+            
+            const token = getAuthToken();
+            
+            try {
+                // Cargar usuarios desde la API (endpoint correcto)
+                const response = await fetch('/get-users', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.success && data.users) {
+                        // Limpiar todas las opciones
+                        destinatarioSelect.innerHTML = '';
+                        
+                        // Crear opciones base
+                        const defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.textContent = 'Seleccionar destinatario...';
+                        destinatarioSelect.appendChild(defaultOption);
+                        
+                        const allUsersOption = document.createElement('option');
+                        allUsersOption.value = 'todos';
+                        allUsersOption.textContent = 'Todos los usuarios';
+                        destinatarioSelect.appendChild(allUsersOption);
+                        
+                        // Agregar usuarios como opciones
+                        data.users.forEach(user => {
+                            // No incluir al usuario admin en la lista de destinatarios
+                            if (user.role !== 'admin') {
+                                const option = document.createElement('option');
+                                option.value = user.username;
+                                option.textContent = `${user.username} (${user.role})`;
+                                destinatarioSelect.appendChild(option);
+                            }
+                        });
+                        
+                        console.log('✅ Usuarios cargados en selector de destinatario:', data.users.length);
+                    } else {
+                        console.error('❌ Error en respuesta del servidor:', data.message || 'Respuesta inválida');
+                    }
+                } else {
+                    console.error('❌ Error al cargar usuarios para destinatario:', response.status);
+                }
+            } catch (error) {
+                console.error('❌ Error al cargar usuarios:', error);
+            }
+        }
+
+        async function showNewCommScreen() {
+            // Ocultar todas las pantallas
+            document.getElementById('appScreen').style.display = 'none';
+            document.getElementById('userListScreen').style.display = 'none';
+            document.getElementById('userFormScreen').style.display = 'none';
+            
+            // Mostrar la pantalla de comunicado
+            document.getElementById('newCommScreen').style.display = 'block';
+            
+            // Limpiar el formulario
+            document.getElementById('commForm').reset();
+            
+            // Cargar usuarios en el selector de destinatario
+            await loadUsersInDestinationSelector();
+        }
+
+        function showMainMenu() {
+            // Ocultar todas las pantallas
+            document.getElementById('newCommScreen').style.display = 'none';
+            document.getElementById('userListScreen').style.display = 'none';
+            document.getElementById('userFormScreen').style.display = 'none';
+            
+            // Mostrar la pantalla principal
+            document.getElementById('appScreen').style.display = 'block';
+        }
+
+        // Manejar el envío del formulario de comunicado
+        document.addEventListener('DOMContentLoaded', function() {
+            const commForm = document.getElementById('commForm');
+            if (commForm) {
+                commForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const commData = {
+                        destinatario: formData.get('destinatario'),
+                        mensaje: formData.get('mensaje'),
+                        prioridad: formData.get('prioridad'),
+                        titulo: `Comunicado de ${currentUser ? currentUser.username : 'Admin'}`
+                    };
+                    
+                    try {
+                        console.log('📤 Enviando comunicado:', commData);
+                        
+                        const token = getAuthToken();
+                        if (!token) {
+                            showMessage('❌ Error de autenticación', 'error');
+                            return;
+                        }
+                        
+                        const response = await fetch('/send-communication', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(commData)
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            showMessage('✅ Comunicado enviado exitosamente', 'success');
+                            
+                            // Limpiar el formulario
+                            this.reset();
+                            
+                            // Actualizar la bandeja de entrada si está visible
+                            const inboxContent = document.getElementById('inboxContent');
+                            if (inboxContent && inboxContent.classList.contains('active')) {
+                                loadInboxCommunications();
+                            }
+                            
+                            // Volver al menú principal
+                            showMainMenu();
+                        } else {
+                            showMessage(`❌ Error: ${result.message}`, 'error');
+                        }
+                        
+                    } catch (error) {
+                        console.error('❌ Error al enviar comunicado:', error);
+                        showMessage('❌ Error al enviar el comunicado', 'error');
+                    }
+                });
+            }
+
+            // Manejador del formulario de respuesta
+            const replyForm = document.getElementById('replyForm');
+            if (replyForm) {
+                replyForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const copyUsers = Array.from(document.getElementById('replyCopia').selectedOptions)
+                                          .map(option => option.value)
+                                          .filter(value => value !== '');
+                    
+                    const replyData = {
+                        destinatario: formData.get('destinatario'),
+                        mensaje: formData.get('mensaje'),
+                        prioridad: formData.get('prioridad'),
+                        titulo: formData.get('asunto'),
+                        copia: copyUsers
+                    };
+                    
+                    try {
+                        console.log('📤 Enviando respuesta:', replyData);
+                        
+                        const token = getAuthToken();
+                        if (!token) {
+                            showMessage('❌ Error de autenticación', 'error');
+                            return;
+                        }
+                        
+                        // Enviar mensaje principal
+                        const response = await fetch('/send-communication', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(replyData)
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            // Si hay usuarios en copia, enviar copias
+                            if (copyUsers.length > 0) {
+                                for (const copyUser of copyUsers) {
+                                    const copyData = {
+                                        ...replyData,
+                                        destinatario: copyUser,
+                                        titulo: `[COPIA] ${replyData.titulo}`
+                                    };
+                                    
+                                    try {
+                                        await fetch('/send-communication', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'Authorization': `Bearer ${token}`
+                                            },
+                                            body: JSON.stringify(copyData)
+                                        });
+                                    } catch (error) {
+                                        console.error(`Error enviando copia a ${copyUser}:`, error);
+                                    }
+                                }
+                            }
+                            
+                            showMessage('✅ Respuesta enviada exitosamente', 'success');
+                            
+                            // Limpiar el formulario
+                            this.reset();
+                            
+                            // Volver a la bandeja de entrada
+                            showInbox();
+                        } else {
+                            showMessage(`❌ Error: ${result.message}`, 'error');
+                        }
+                        
+                    } catch (error) {
+                        console.error('❌ Error al enviar respuesta:', error);
+                        showMessage('❌ Error al enviar la respuesta', 'error');
+                    }
+                });
+            }
+        });
+
+        // Funciones para la gestión de comunicados enviados
+        let sentCommunications = [];
+        let selectedCommunication = null;
+
+        // Función para cargar comunicados enviados desde el servidor
+        async function loadSentCommunications() {
+            const container = document.getElementById('communicationsContainer');
+            if (!container) {
+                console.error('No se encontró el contenedor de comunicados');
+                return;
+            }
+            
+            // Mostrar loading
+            container.innerHTML = '<div class="loading-message"><p>Cargando comunicados enviados...</p></div>';
+            
+            try {
+                const token = getAuthToken();
+                if (!token) {
+                    container.innerHTML = '<div class="no-communications"><p>Error de autenticación.</p></div>';
+                    return;
+                }
+                
+                const response = await fetch('/get-communications', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    sentCommunications = result.communications;
+                    
+                    if (sentCommunications.length === 0) {
+                        container.innerHTML = '<div class="no-communications"><p>No hay comunicados enviados.</p></div>';
+                    } else {
+                        renderCommunicationsList();
+                    }
+                } else {
+                    container.innerHTML = '<div class="no-communications"><p>Error al cargar los comunicados.</p></div>';
+                    showMessage(`❌ Error: ${result.message}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error al cargar comunicados:', error);
+                container.innerHTML = '<div class="no-communications"><p>Error al cargar los comunicados.</p></div>';
+                showMessage('❌ Error al cargar los comunicados', 'error');
+            }
+        }
+
+        // Función para renderizar la lista de comunicados
+        function renderCommunicationsList() {
+            const container = document.getElementById('communicationsContainer');
+            container.innerHTML = '';
+            
+            sentCommunications.forEach(comm => {
+                const commElement = document.createElement('div');
+                commElement.className = 'communication-item';
+                commElement.onclick = () => showCommunicationDetails(comm);
+                
+                const preview = comm.mensaje.length > 100 ? 
+                    comm.mensaje.substring(0, 100) + '...' : comm.mensaje;
+                
+                commElement.innerHTML = `
+                    <div class="comm-header">
+                        <h4 class="comm-title">${comm.titulo}</h4>
+                        <div class="comm-header-right">
+                            <span class="comm-date">${formatDate(comm.fecha)} ${comm.hora}</span>
+                            <button class="delete-btn" onclick="event.stopPropagation(); deleteCommunication(${comm.id})" title="Eliminar comunicado">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                    <div class="comm-recipient">Para: ${comm.destinatario}</div>
+                    <div class="comm-preview">${preview}</div>
+                    <span class="comm-priority priority-${comm.prioridad}">
+                        ${comm.prioridad.charAt(0).toUpperCase() + comm.prioridad.slice(1)}
+                    </span>
+                `;
+                
+                container.appendChild(commElement);
+            });
+        }
+
+        // Función para eliminar un comunicado
+        async function deleteCommunication(commId) {
+            if (!confirm('¿Estás seguro de que quieres eliminar este comunicado?')) {
+                return;
+            }
+
+            try {
+                const token = getAuthToken();
+                if (!token) {
+                    showMessage('❌ Error de autenticación', 'error');
+                    return;
+                }
+
+                const response = await fetch('/delete-communication', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ id: commId })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage('✅ Comunicado eliminado exitosamente', 'success');
+                    // Recargar la lista de comunicados
+                    loadSentCommunications();
+                } else {
+                    showMessage(`❌ Error: ${result.message}`, 'error');
+                }
+
+            } catch (error) {
+                console.error('Error al eliminar comunicado:', error);
+                showMessage('❌ Error al eliminar el comunicado', 'error');
+            }
+        }
+
+        // Función para mostrar detalles del comunicado
+        function showCommunicationDetails(communication) {
+            selectedCommunication = communication;
+            const detailsPanel = document.getElementById('communicationDetails');
+            const detailsContent = detailsPanel.querySelector('.details-content');
+            
+            detailsContent.innerHTML = `
+                <div class="detail-field">
+                    <label>Título:</label>
+                    <span>${communication.titulo}</span>
+                </div>
+                <div class="detail-field">
+                    <label>Destinatario:</label>
+                    <span>${communication.destinatario}</span>
+                </div>
+                <div class="detail-field">
+                    <label>Fecha y Hora:</label>
+                    <span>${formatDate(communication.fecha)} a las ${communication.hora}</span>
+                </div>
+                <div class="detail-field">
+                    <label>Prioridad:</label>
+                    <span class="comm-priority priority-${communication.prioridad}">
+                        ${communication.prioridad.charAt(0).toUpperCase() + communication.prioridad.slice(1)}
+                    </span>
+                </div>
+                <div class="detail-field">
+                    <label>Mensaje:</label>
+                    <div class="message-content">${communication.mensaje}</div>
+                </div>
+            `;
+            
+            detailsPanel.style.display = 'block';
+        }
+
+        // Función para cerrar detalles del comunicado
+        function closeCommunicationDetails() {
+            const detailsPanel = document.getElementById('communicationDetails');
+            detailsPanel.style.display = 'none';
+            selectedCommunication = null;
+        }
+
+        // Función para formatear fecha
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            return date.toLocaleDateString('es-ES', options);
+        }
+
+        // Función para mostrar la bandeja de salida
+        function showOutbox() {
+            showContent('outbox');
+            loadSentCommunications();
+        }
+
+        // Variables para la bandeja de entrada
+        let receivedCommunications = [];
+        let selectedInboxCommunication = null;
+
+        // Función para cargar mensajes recibidos desde el servidor
+        async function loadInboxCommunications() {
+            const container = document.getElementById('inboxContainer');
+            if (!container) {
+                console.error('No se encontró el contenedor de bandeja de entrada');
+                return;
+            }
+            
+            // Mostrar loading
+            container.innerHTML = '<div class="loading-message"><p>Cargando mensajes recibidos...</p></div>';
+            
+            try {
+                const token = getAuthToken();
+                if (!token) {
+                    container.innerHTML = '<div class="no-communications"><p>Error de autenticación.</p></div>';
+                    return;
+                }
+                
+                const response = await fetch('/get-inbox', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    receivedCommunications = result.communications;
+                    
+                    if (receivedCommunications.length === 0) {
+                        container.innerHTML = '<div class="no-communications"><p>No hay mensajes recibidos.</p></div>';
+                    } else {
+                        renderInboxCommunicationsList();
+                    }
+                } else {
+                    container.innerHTML = '<div class="no-communications"><p>Error al cargar los mensajes.</p></div>';
+                    showMessage(`❌ Error: ${result.message}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error al cargar mensajes de bandeja de entrada:', error);
+                container.innerHTML = '<div class="no-communications"><p>Error al cargar los mensajes.</p></div>';
+                showMessage('❌ Error al cargar los mensajes', 'error');
+            }
+        }
+
+        // Función para renderizar la lista de mensajes recibidos
+        function renderInboxCommunicationsList() {
+            const container = document.getElementById('inboxContainer');
+            if (!container) {
+                console.error('No se encontró el contenedor inboxContainer');
+                return;
+            }
+            container.innerHTML = '';
+            
+            receivedCommunications.forEach(communication => {
+                const commElement = document.createElement('div');
+                commElement.className = 'communication-item';
+                commElement.onclick = () => showInboxCommunicationDetails(communication);
+                
+                const priorityClass = `priority-${communication.prioridad}`;
+                const priorityText = communication.prioridad.charAt(0).toUpperCase() + communication.prioridad.slice(1);
+                
+                commElement.innerHTML = `
+                    <div class="comm-header">
+                        <h4 class="comm-title">${communication.titulo}</h4>
+                        <span class="comm-priority ${priorityClass}">${priorityText}</span>
+                    </div>
+                    <div class="comm-meta">
+                        <span class="comm-sender">De: ${communication.remitente}</span>
+                        <span class="comm-date">${formatDate(communication.fecha)} - ${communication.hora}</span>
+                    </div>
+                    <div class="comm-preview">
+                        ${communication.mensaje.substring(0, 100)}${communication.mensaje.length > 100 ? '...' : ''}
+                    </div>
+                `;
+                
+                container.appendChild(commElement);
+            });
+        }
+
+        // Función para mostrar detalles de un mensaje recibido
+        function showInboxCommunicationDetails(communication) {
+            selectedInboxCommunication = communication;
+            
+            // Actualizar el panel de detalles
+            document.getElementById('inboxDetailTitle').textContent = communication.titulo;
+            document.getElementById('inboxDetailSender').textContent = communication.remitente;
+            document.getElementById('inboxDetailDate').textContent = formatDate(communication.fecha);
+            document.getElementById('inboxDetailTime').textContent = communication.hora;
+            document.getElementById('inboxDetailMessage').textContent = communication.mensaje;
+            
+            // Actualizar prioridad
+            const priorityElement = document.getElementById('inboxDetailPriority');
+            priorityElement.textContent = communication.prioridad.charAt(0).toUpperCase() + communication.prioridad.slice(1);
+            priorityElement.className = `priority-badge priority-${communication.prioridad}`;
+            
+            // Mostrar el panel
+            document.getElementById('inboxDetailsPanel').style.display = 'block';
+        }
+
+        // Función para cerrar detalles de mensaje recibido
+        function closeInboxDetails() {
+            document.getElementById('inboxDetailsPanel').style.display = 'none';
+            selectedInboxCommunication = null;
+        }
+
+        // Función para mostrar la bandeja de entrada
+        function showInbox() {
+            showContent('inbox');
+            loadInboxCommunications();
+        }
+
+        // Función para responder a un mensaje
+        function replyToMessage() {
+            if (!selectedInboxCommunication) {
+                alert('No hay mensaje seleccionado para responder');
+                return;
+            }
+
+            // Llenar información del mensaje original
+            document.getElementById('originalSender').textContent = selectedInboxCommunication.remitente;
+            document.getElementById('originalSubject').textContent = selectedInboxCommunication.titulo;
+
+            // Pre-llenar campos del formulario de respuesta
+            document.getElementById('replyDestinatario').value = selectedInboxCommunication.remitente;
+            document.getElementById('replyAsunto').value = 'Re: ' + selectedInboxCommunication.titulo;
+            document.getElementById('replyMensaje').value = '';
+            document.getElementById('replyPrioridad').value = 'normal';
+
+            // Cargar usuarios para el campo de copia
+            loadUsersForCopy();
+
+            // Mostrar pantalla de respuesta
+            showContent('reply');
+        }
+
+        // Función para cargar usuarios en el campo de copia
+        async function loadUsersForCopy() {
+            try {
+                const response = await fetch('/api/users', {
+                    headers: {
+                        'Authorization': `Bearer ${getAuthToken()}`
+                    }
+                });
+
+                if (response.ok) {
+                    const users = await response.json();
+                    const copySelect = document.getElementById('replyCopia');
+                    
+                    // Limpiar opciones existentes excepto la primera
+                    copySelect.innerHTML = '<option value="">Seleccionar usuarios para copia...</option>';
+                    
+                    // Añadir usuarios (excluyendo al remitente original y al usuario actual)
+                    users.forEach(user => {
+                        if (user.username !== selectedInboxCommunication.remitente && 
+                            user.username !== currentUser.username) {
+                            const option = document.createElement('option');
+                            option.value = user.username;
+                            option.textContent = `${user.nombre} (${user.username})`;
+                            copySelect.appendChild(option);
+                        }
+                    });
+                } else {
+                    console.error('Error al cargar usuarios para copia');
+                }
+            } catch (error) {
+                console.error('Error al cargar usuarios:', error);
+            }
+        }
+
+        // Función para cancelar respuesta
+        function cancelReply() {
+            // Limpiar formulario
+            document.getElementById('replyForm').reset();
+            
+            // Volver a la bandeja de entrada
+            showInbox();
+        }
+
+        // ===== PWA Y ACTUALIZACIONES EN TIEMPO REAL =====
+
+        // Registrar Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js');
+                    console.log('Service Worker registrado:', registration);
+                    
+                    // Manejar actualizaciones del Service Worker
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // Nueva versión disponible
+                                if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
+                                    newWorker.postMessage({ type: 'SKIP_WAITING' });
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.error('Error registrando Service Worker:', error);
+                }
+            });
+        }
+
+        // Configurar Server-Sent Events para actualizaciones en tiempo real
+        let eventSource = null;
+        let reconnectAttempts = 0;
+        const maxReconnectAttempts = 5;
+
+        function setupServerSentEvents() {
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            eventSource = new EventSource('/api/events');
+            
+            eventSource.onopen = function() {
+                console.log('Conexión SSE establecida');
+                reconnectAttempts = 0;
+                
+                // Mostrar indicador de conexión
+                updateConnectionStatus(true);
+            };
+
+            eventSource.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    handleRealTimeUpdate(data);
+                } catch (error) {
+                    console.error('Error procesando evento SSE:', error);
+                }
+            };
+
+            eventSource.onerror = function(error) {
+                console.error('Error en SSE:', error);
+                updateConnectionStatus(false);
+                
+                // Intentar reconectar
+                if (reconnectAttempts < maxReconnectAttempts) {
+                    reconnectAttempts++;
+                    setTimeout(() => {
+                        console.log(`Reintentando conexión SSE (${reconnectAttempts}/${maxReconnectAttempts})`);
+                        setupServerSentEvents();
+                    }, 2000 * reconnectAttempts);
+                }
+            };
+        }
+
+        // Manejar actualizaciones en tiempo real
+        function handleRealTimeUpdate(data) {
+            console.log('Actualización en tiempo real:', data);
+            
+            switch (data.type) {
+                case 'new_message':
+                    // Nuevo mensaje recibido
+                    showNotification('Nuevo mensaje', `De: ${data.sender}`);
+                    if (document.getElementById('inboxContent').style.display !== 'none') {
+                        loadInboxCommunications(); // Recargar bandeja de entrada
+                    }
+                    break;
+                    
+                case 'user_created':
+                case 'user_updated':
+                case 'user_deleted':
+                    // Cambios en usuarios
+                    if (document.getElementById('userManagement').style.display !== 'none') {
+                        refreshUsers(); // Recargar lista de usuarios
+                    }
+                    break;
+                    
+                case 'message_deleted':
+                    // Mensaje eliminado
+                    if (document.getElementById('inboxContent').style.display !== 'none') {
+                        loadInboxCommunications();
+                    }
+                    if (document.getElementById('sentContent').style.display !== 'none') {
+                        loadSentCommunications();
+                    }
+                    break;
+            }
+        }
+
+        // Mostrar notificaciones
+        function showNotification(title, body) {
+            // Verificar si las notificaciones están permitidas
+            if ('Notification' in window && Notification.permission === 'granted') {
+                const notification = new Notification(title, {
+                    body: body,
+                    icon: '/icon-192x192.svg',
+                    badge: '/icon-192x192.svg',
+                    tag: 'comunicacion-nueva',
+                    requireInteraction: false,
+                    silent: false
+                });
+
+                notification.onclick = function() {
+                    window.focus();
+                    showInbox();
+                    notification.close();
+                };
+
+                // Auto cerrar después de 5 segundos
+                setTimeout(() => notification.close(), 5000);
+            } else {
+                // Fallback: mostrar mensaje en la interfaz
+                showMessage(title + ': ' + body, 'info');
+            }
+        }
+
+        // Solicitar permisos de notificación
+        function requestNotificationPermission() {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('Permisos de notificación concedidos');
+                    }
+                });
+            }
+        }
+
+        // Actualizar indicador de estado de conexión
+        function updateConnectionStatus(connected) {
+            // Crear indicador si no existe
+            let indicator = document.getElementById('connectionIndicator');
+            if (!indicator) {
+                indicator = document.createElement('div');
+                indicator.id = 'connectionIndicator';
+                indicator.style.cssText = `
+                    position: fixed;
+                    top: 10px;
+                    right: 10px;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    z-index: 1000;
+                    transition: all 0.3s ease;
+                `;
+                document.body.appendChild(indicator);
+            }
+            
+            if (connected) {
+                indicator.style.backgroundColor = '#28a745';
+                indicator.title = 'Conectado - Actualizaciones en tiempo real activas';
+            } else {
+                indicator.style.backgroundColor = '#dc3545';
+                indicator.title = 'Desconectado - Reintentando conexión...';
+            }
+        }
+
+        // Detectar cuando la app vuelve a estar visible
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                // La app volvió a estar visible, verificar actualizaciones
+                const inboxContent = document.getElementById('inboxContent');
+                const sentContent = document.getElementById('sentContent');
+                
+                if (inboxContent && inboxContent.style.display !== 'none') {
+                    loadInboxCommunications();
+                }
+                if (sentContent && sentContent.style.display !== 'none') {
+                    loadSentCommunications();
+                }
+            }
+        });
+
+        // Detectar cuando la app vuelve a tener conexión
+        window.addEventListener('online', () => {
+            console.log('Conexión restaurada');
+            setupServerSentEvents();
+            showMessage('Conexión restaurada', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            console.log('Conexión perdida');
+            showMessage('Sin conexión - Modo offline', 'warning');
+        });
+
+        // Inicializar actualizaciones en tiempo real cuando el usuario se autentique
+        const originalUpdateUserInterface = updateUserInterface;
+        updateUserInterface = function() {
+            originalUpdateUserInterface();
+            
+            // Configurar actualizaciones en tiempo real
+            setupServerSentEvents();
+            
+            // Solicitar permisos de notificación
+            requestNotificationPermission();
+        };
+
+        // Hot Reload para desarrollo
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', event => {
+                if (event.data && event.data.type === 'HOT_RELOAD') {
+                    console.log('🔄 Hot reload detectado:', event.data.message);
+                    
+                    // Mostrar notificación de recarga
+                    const notification = document.createElement('div');
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #4CAF50;
+                        color: white;
+                        padding: 12px 20px;
+                        border-radius: 8px;
+                        z-index: 10000;
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                        animation: slideIn 0.3s ease-out;
+                    `;
+                    notification.innerHTML = '🔄 Actualizando aplicación...';
+                    document.body.appendChild(notification);
+                    
+                    // Recargar después de un breve delay
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
+            });
+        }
+
+        // CSS para animación de notificación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+    </script>
+
+</body>
+<!-- Cache buster: 1758269692 -->
+</html>

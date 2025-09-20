@@ -1,38 +1,105 @@
 {
   "name": "Comunicaciones Internas",
   "short_name": "ComInternas",
-  "description": "Sistema de gestión de comunicados empresariales",
-  "start_url": "/safari-inicio.html",
+  "description": "Sistema de comunicaciones internas para la empresa",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#667eea",
-  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
   "orientation": "portrait-primary",
   "scope": "/",
-  "id": "/comunicaciones-internas/",
   "lang": "es",
+  "dir": "ltr",
   "categories": ["business", "productivity"],
   "icons": [
     {
-      "src": "img/app-icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "src": "icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
-      "src": "img/app-icon.svg",
+      "src": "icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
-      "src": "img/app-icon.svg",
+      "src": "icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "type": "image/png",
+      "purpose": "maskable any"
     }
   ],
-  "prefer_related_applications": false,
-  "edge_side_panel": {
-    "preferred_width": 400
-  }
+  "screenshots": [
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Bandeja de Entrada",
+      "short_name": "Inbox",
+      "description": "Ver mensajes recibidos",
+      "url": "/?view=inbox",
+      "icons": [
+        {
+          "src": "icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Nuevo Mensaje",
+      "short_name": "Nuevo",
+      "description": "Enviar nuevo mensaje",
+      "url": "/?view=new",
+      "icons": [
+        {
+          "src": "icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
 }

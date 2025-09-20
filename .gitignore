@@ -1,0 +1,29 @@
+# Archivos de base de datos local
+users.db
+*.db
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Archivos del sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Archivos de backup
+backup/
+app-backup-funcional/
+
+# Logs
+*.log
