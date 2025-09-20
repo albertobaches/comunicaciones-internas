@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Flask application for Render deployment
 Simple version of the communications app for production

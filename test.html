@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Botones Funcionando</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 0.5rem;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .feature {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 1rem;
+        }
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 ¡Test de Botones!</h1>
+        <p>Prueba estos botones para verificar que funcionan:</p>
+        
+        <div>
+            <button onclick="alert('¡Botón 1 funciona perfectamente!'); console.log('Botón 1 clickeado')" class="btn">
+                Botón Test 1
+            </button>
+            <button onclick="alert('¡Botón 2 también funciona!'); console.log('Botón 2 clickeado')" class="btn">
+                Botón Test 2
+            </button>
+        </div>
+        
+        <div class="feature" onclick="alert('¡La tarjeta funciona!'); console.log('Tarjeta clickeada')">
+            <h3>📱 Tarjeta Test</h3>
+            <p>Haz clic en esta tarjeta</p>
+        </div>
+        
+        <div style="margin-top: 2rem;">
+            <p><strong>✅ Si ves las alertas, ¡los botones funcionan!</strong></p>
+            <p>Abre las herramientas de desarrollador (F12) para ver los logs en la consola.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 WSGI entry point para Render.com
 Simple Flask application for production deployment
@@ -7,7 +8,7 @@ Simple Flask application for production deployment
 import os
 from app import app
 
-# Esta es la aplicación WSGI que Render usará
+# Esta es la aplicacion WSGI que Render usara
 application = app
 
 if __name__ == '__main__':
