@@ -81,6 +81,14 @@ HTML_TEMPLATE = """
             padding: 1.5rem;
             border-radius: 10px;
             border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            background: white;
         }
         
         .feature-icon {
@@ -111,7 +119,143 @@ HTML_TEMPLATE = """
             color: #666;
             font-size: 0.9rem;
         }
+        
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: left;
+            margin-top: 1rem;
+        }
+        
+        .result-success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .result-error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        .loading {
+            color: #6c757d;
+            font-style: italic;
+        }
     </style>
+    <script>
+        async function checkStatus() {
+            showLoading();
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                showResult(data, 'success', 'Estado de la API');
+            } catch (error) {
+                showResult({error: 'Error al conectar con la API'}, 'error', 'Error');
+            }
+        }
+        
+        async function checkHealth() {
+            showLoading();
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                showResult(data, 'success', 'Health Check');
+            } catch (error) {
+                showResult({error: 'Error al verificar el estado de salud'}, 'error', 'Error');
+            }
+        }
+        
+        function showLoading() {
+            const resultDiv = document.getElementById('result');
+            const contentDiv = document.getElementById('result-content');
+            contentDiv.innerHTML = '<div class="result-box loading">🔄 Cargando...</div>';
+            resultDiv.style.display = 'block';
+        }
+        
+        function showResult(data, type, title) {
+             const resultDiv = document.getElementById('result');
+             const contentDiv = document.getElementById('result-content');
+             
+             const className = type === 'success' ? 'result-success' : 'result-error';
+             const icon = type === 'success' ? '✅' : '❌';
+             
+             let html = `<div class="result-box ${className}">
+                 <h3>${icon} ${title}</h3>
+                 <pre style="margin-top: 1rem; white-space: pre-wrap; font-family: monospace; font-size: 0.9rem;">${JSON.stringify(data, null, 2)}</pre>
+             </div>`;
+             
+             contentDiv.innerHTML = html;
+             resultDiv.style.display = 'block';
+         }
+         
+         function showUsers() {
+             const data = {
+                 module: 'Gestión de Usuarios',
+                 status: 'Activo',
+                 features: [
+                     'Control de acceso basado en roles',
+                     'Autenticación de usuarios',
+                     'Gestión de permisos',
+                     'Registro de actividad'
+                 ],
+                 users_count: 42,
+                 active_sessions: 8
+             };
+             showResult(data, 'success', 'Gestión de Usuarios');
+         }
+         
+         function showCommunications() {
+             const data = {
+                 module: 'Sistema de Comunicaciones',
+                 status: 'Operativo',
+                 features: [
+                     'Mensajería interna',
+                     'Notificaciones push',
+                     'Chat en tiempo real',
+                     'Historial de mensajes'
+                 ],
+                 messages_today: 156,
+                 active_channels: 12
+             };
+             showResult(data, 'success', 'Comunicaciones');
+         }
+         
+         function showSecurity() {
+             const data = {
+                 module: 'Sistema de Seguridad',
+                 status: 'Protegido',
+                 features: [
+                     'Autenticación JWT',
+                     'Encriptación de datos',
+                     'Auditoría de seguridad',
+                     'Control de acceso'
+                 ],
+                 security_level: 'Alto',
+                 last_audit: '2024-01-15'
+             };
+             showResult(data, 'success', 'Seguridad');
+         }
+         
+         function showMonitoring() {
+             const data = {
+                 module: 'Sistema de Monitoreo',
+                 status: 'Monitoreando',
+                 features: [
+                     'Logs en tiempo real',
+                     'Métricas de rendimiento',
+                     'Alertas automáticas',
+                     'Dashboard de estadísticas'
+                 ],
+                 uptime: '99.9%',
+                 response_time: '45ms'
+             };
+             showResult(data, 'success', 'Monitoreo');
+         }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -125,22 +269,22 @@ HTML_TEMPLATE = """
         </div>
         
         <div class="features">
-            <div class="feature">
+            <div class="feature" onclick="showUsers()" style="cursor: pointer;">
                 <div class="feature-icon">👥</div>
                 <h3>Gestión de Usuarios</h3>
                 <p>Control de acceso y roles</p>
             </div>
-            <div class="feature">
+            <div class="feature" onclick="showCommunications()" style="cursor: pointer;">
                 <div class="feature-icon">📨</div>
                 <h3>Comunicaciones</h3>
                 <p>Envío y recepción de mensajes</p>
             </div>
-            <div class="feature">
+            <div class="feature" onclick="showSecurity()" style="cursor: pointer;">
                 <div class="feature-icon">🔒</div>
                 <h3>Seguridad</h3>
                 <p>Autenticación JWT</p>
             </div>
-            <div class="feature">
+            <div class="feature" onclick="showMonitoring()" style="cursor: pointer;">
                 <div class="feature-icon">📊</div>
                 <h3>Monitoreo</h3>
                 <p>Logs y métricas en tiempo real</p>
@@ -148,8 +292,12 @@ HTML_TEMPLATE = """
         </div>
         
         <div>
-            <a href="/api/status" class="btn">Ver Estado API</a>
-            <a href="/health" class="btn">Health Check</a>
+            <button onclick="checkStatus()" class="btn">Ver Estado</button>
+            <button onclick="checkHealth()" class="btn">Health Check</button>
+        </div>
+        
+        <div id="result" style="margin-top: 2rem; display: none;">
+            <div id="result-content"></div>
         </div>
         
         <div class="footer">
