@@ -1,4 +1,6 @@
 # Dependencias para la aplicación de comunicaciones internas
+# Flask framework
+Flask==2.3.3
 # Gunicorn es necesario para el despliegue en Render
 gunicorn==21.2.0
 # PostgreSQL adapter para Render
